@@ -31,13 +31,13 @@ Breaks and lunch are outside the six hours of workshop content.
 
 1. Open the APIM instance in the Azure portal.
 2. Select **APIs**, then **Add API**, then **OpenAPI**.
-3. Import `openapi/service-agreement-api.yaml`.
-4. Set the API URL suffix to `service-agreements`.
+3. Import `openapi/work-request-api.yaml`.
+4. Set the API URL suffix to `work-requests`.
 5. Confirm these operation IDs were imported:
 
-   - `getServiceAgreement`
-   - `createServiceAgreement`
-   - `updateServiceAgreementStatus`
+   - `getWorkRequest`
+   - `createWorkRequest`
+   - `updateWorkRequestStatus`
 
 6. Apply each operation-level policy from `policies/mock-*.xml`.
 7. Test all three operations from the APIM test console.
@@ -51,7 +51,7 @@ The API must return synthetic JSON without calling a customer backend.
 1. In APIM, select **APIs**, then **MCP Servers**.
 2. Select **Create MCP server**.
 3. Select **Expose an API as an MCP server**.
-4. Choose the synthetic service agreement API.
+4. Choose the synthetic work-request API.
 5. Expose the three operations as tools.
 6. Record the generated server URL. It should end in `/mcp`.
 7. Apply `policies/mcp-governance.xml` at the MCP server scope.
@@ -65,11 +65,11 @@ The MCP client must discover all three tools.
 1. Copy `.vscode/mcp.json.example` to `.vscode/mcp.json`.
 2. Replace the placeholder URL with the APIM MCP server URL.
 3. Run **MCP: List Servers** and start the server.
-4. In Copilot agent mode, enable the service agreement tools.
+4. In Copilot agent mode, enable the work-request tools.
 5. Ask:
 
    ```text
-   Get service agreement SA-1001 and summarize its current status.
+   Get work request WR-1001 and summarize its current status.
    ```
 
 ### Troubleshooting
@@ -109,7 +109,7 @@ The MCP client must discover all three tools.
 
    ```powershell
    $body = @{
-     input = "Review service agreement SA-1001 and recommend the next action."
+     input = "Review work request WR-1001 and recommend the next action."
      stream = $false
    } | ConvertTo-Json
 
@@ -159,15 +159,15 @@ Start with the working sandbox. Add controls one at a time.
 Use these prompts:
 
 ```text
-Get service agreement SA-1001 and explain what is blocking approval.
+Get work request WR-1001 and explain what is blocking approval.
 ```
 
 ```text
-Create a draft service agreement request for vegetation management inspection services with a not-to-exceed amount of $25,000.
+Create a draft work request for facility inspection services with a not-to-exceed amount of $25,000.
 ```
 
 ```text
-Update service agreement SA-1001 to ReadyForReview and explain what changed.
+Update work request WR-1001 to ReadyForReview and explain what changed.
 ```
 
 For state-changing prompts, pause before execution and discuss approval, identity, audit, and rollback expectations.

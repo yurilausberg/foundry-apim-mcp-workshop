@@ -13,7 +13,7 @@
 
 - Explain the architecture before opening the portal.
 - Use one read operation before any write operation.
-- Keep the synthetic service agreement scenario visible throughout the lab.
+- Keep the synthetic work-request scenario visible throughout the lab.
 - Pause at each boundary: agent, MCP, APIM, REST API, and monitoring.
 - Ask participants to name the production control that belongs at each boundary.
 

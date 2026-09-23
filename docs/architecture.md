@@ -5,7 +5,7 @@ flowchart LR
     User[Workshop participant] --> Agent[Foundry or Copilot Studio agent]
     Agent -->|Streamable HTTP MCP| APIM[Azure API Management MCP server]
     APIM --> Policy[Authentication, rate limits, trace, and logging policies]
-    Policy --> API[Synthetic service agreement REST API]
+    Policy --> API[Synthetic work-request REST API]
     API --> Mock[APIM mock responses]
     APIM --> Monitor[Azure Monitor and Application Insights]
 ```

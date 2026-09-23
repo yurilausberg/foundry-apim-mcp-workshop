@@ -7,7 +7,7 @@
         <value>application/json</value>
       </set-header>
       <set-body>{
-  "id": "SA-1002",
+  "id": "WR-1002",
   "title": "Synthetic workshop request",
   "requester": "Workshop Participant",
   "status": "Draft",

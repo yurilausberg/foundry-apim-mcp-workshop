@@ -7,9 +7,9 @@
         <value>application/json</value>
       </set-header>
       <set-body>{
-  "id": "SA-1001",
-  "title": "Vegetation management inspection services",
-  "requester": "Operations Planning",
+  "id": "WR-1001",
+  "title": "Facility inspection services",
+  "requester": "Operations Team",
   "status": "NeedsInformation",
   "amount": 25000,
   "currency": "USD",

@@ -26,7 +26,7 @@ var mcpServerEndpoint =
 
 var mcpServerName =
     Environment.GetEnvironmentVariable("MCP_SERVER_NAME")
-    ?? "service_agreement_tools";
+    ?? "work_request_tools";
 
 var mcpTool = new HostedMcpServerTool(
     serverName: mcpServerName,
@@ -34,9 +34,9 @@ var mcpTool = new HostedMcpServerTool(
 {
     AllowedTools =
     [
-        "getServiceAgreement",
-        "createServiceAgreement",
-        "updateServiceAgreementStatus"
+        "getWorkRequest",
+        "createWorkRequest",
+        "updateWorkRequestStatus"
     ],
     ApprovalMode = HostedMcpServerToolApprovalMode.AlwaysRequire
 };
@@ -47,14 +47,14 @@ AIAgent agent = new AIProjectClient(
     .AsAIAgent(
         model: deploymentName,
         instructions: """
-            You help workshop participants evaluate synthetic service agreement requests.
-            Use the available MCP tools for agreement data.
+            You help workshop participants evaluate synthetic work requests.
+            Use the available MCP tools for work-request data.
             Never claim the data is from a production or customer system.
             Explain the evidence used for every recommendation.
             Treat create and status-update operations as state-changing actions.
             """,
-        name: "service-agreement-workshop-agent",
-        description: "Workshop agent using service agreement tools exposed through APIM and MCP",
+        name: "work-request-workshop-agent",
+        description: "Workshop agent using work-request tools exposed through APIM and MCP",
         tools: [mcpTool]);
 
 var builder = AgentHost.CreateBuilder(args);

@@ -25,7 +25,7 @@
 |---|---|
 | Foundry project endpoint | `https://resource.services.ai.azure.com/api/projects/project-name` |
 | Model deployment name | `gpt-5.4-mini` |
-| APIM MCP endpoint | `https://instance.azure-api.net/service-agreements-mcp/mcp` |
+| APIM MCP endpoint | `https://instance.azure-api.net/work-requests-mcp/mcp` |
 
 ## Sandbox rules
 

@@ -2,7 +2,7 @@
 
 A public workshop scaffold for turning an existing REST API into governed tools for AI agents.
 
-The lab uses a synthetic service agreement API, Azure API Management, Model Context Protocol, Microsoft Foundry, Microsoft Agent Framework, and an optional Copilot Studio path. It does not require customer data or access to customer systems.
+The lab uses a synthetic work-request API, Azure API Management, Model Context Protocol, Microsoft Foundry, Microsoft Agent Framework, and an optional Copilot Studio path. It does not require organization data or access to organization systems.
 
 ## What participants build
 
@@ -24,7 +24,7 @@ Foundry code-first agent   Copilot Studio agent
 ## Repository contents
 
 - `WORKSHOP.md`: Step-by-step workshop instructions.
-- `openapi/service-agreement-api.yaml`: Synthetic API contract.
+- `openapi/work-request-api.yaml`: Synthetic API contract.
 - `policies/`: APIM policy examples for mock responses and governance.
 - `src/Workshop.Agent/`: Current .NET hosted-agent starter.
 - `docs/architecture.md`: Reference architecture and design notes.

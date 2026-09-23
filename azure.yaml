@@ -16,8 +16,8 @@ services:
       runtime: dotnet_10
       entryPoint: Workshop.Agent.dll
     kind: hosted
-    name: service-agreement-workshop-agent
-    displayName: Service Agreement Workshop Agent
+    name: work-request-workshop-agent
+    displayName: Work Request Workshop Agent
     description: A workshop agent using APIM-hosted MCP tools.
     protocols:
       - protocol: responses
@@ -25,7 +25,7 @@ services:
     env:
       AZURE_AI_MODEL_DEPLOYMENT_NAME: ${AZURE_AI_MODEL_DEPLOYMENT_NAME}
       MCP_SERVER_ENDPOINT: ${MCP_SERVER_ENDPOINT}
-      MCP_SERVER_NAME: service_agreement_tools
+      MCP_SERVER_NAME: work_request_tools
 
 infra:
   provider: microsoft.foundry

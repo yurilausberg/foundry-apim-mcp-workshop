@@ -1,62 +1,62 @@
 openapi: 3.0.3
 info:
-  title: Synthetic Service Agreement API
+  title: Synthetic Work Request API
   version: 1.0.0
   description: A synthetic API for workshop use. It contains no customer data.
 servers:
   - url: https://example.invalid
 paths:
-  /service-agreements/{agreementId}:
+  /work-requests/{requestId}:
     get:
-      operationId: getServiceAgreement
-      summary: Get a service agreement request
-      description: Returns a synthetic service agreement request by identifier.
+      operationId: getWorkRequest
+      summary: Get a work request
+      description: Returns a synthetic work request by identifier.
       parameters:
-        - name: agreementId
+        - name: requestId
           in: path
           required: true
           schema:
             type: string
-          example: SA-1001
+          example: WR-1001
       responses:
         "200":
-          description: Service agreement request
+          description: Work request
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/ServiceAgreement"
+                $ref: "#/components/schemas/WorkRequest"
         "404":
-          description: Agreement not found
-  /service-agreements:
+          description: Work request not found
+  /work-requests:
     post:
-      operationId: createServiceAgreement
-      summary: Create a service agreement request
-      description: Creates a synthetic draft service agreement request.
+      operationId: createWorkRequest
+      summary: Create a work request
+      description: Creates a synthetic draft work request.
       requestBody:
         required: true
         content:
           application/json:
             schema:
-              $ref: "#/components/schemas/CreateServiceAgreementRequest"
+              $ref: "#/components/schemas/CreateWorkRequest"
       responses:
         "201":
-          description: Created service agreement request
+          description: Created work request
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/ServiceAgreement"
-  /service-agreements/{agreementId}/status:
+                $ref: "#/components/schemas/WorkRequest"
+  /work-requests/{requestId}/status:
     patch:
-      operationId: updateServiceAgreementStatus
-      summary: Update service agreement status
-      description: Updates the workflow status of a synthetic service agreement request.
+      operationId: updateWorkRequestStatus
+      summary: Update work request status
+      description: Updates the workflow status of a synthetic work request.
       parameters:
-        - name: agreementId
+        - name: requestId
           in: path
           required: true
           schema:
             type: string
-          example: SA-1001
+          example: WR-1001
       requestBody:
         required: true
         content:
@@ -65,14 +65,14 @@ paths:
               $ref: "#/components/schemas/UpdateStatusRequest"
       responses:
         "200":
-          description: Updated service agreement request
+          description: Updated work request
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/ServiceAgreement"
+                $ref: "#/components/schemas/WorkRequest"
 components:
   schemas:
-    ServiceAgreement:
+    WorkRequest:
       type: object
       required:
         - id
@@ -84,13 +84,13 @@ components:
       properties:
         id:
           type: string
-          example: SA-1001
+          example: WR-1001
         title:
           type: string
-          example: Vegetation management inspection services
+          example: Facility inspection services
         requester:
           type: string
-          example: Operations Planning
+          example: Operations Team
         status:
           type: string
           enum:
@@ -118,7 +118,7 @@ components:
           type: string
           format: date-time
           example: 2026-09-23T16:00:00Z
-    CreateServiceAgreementRequest:
+    CreateWorkRequest:
       type: object
       required:
         - title
