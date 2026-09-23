@@ -1,5 +1,65 @@
 # Workshop Guide
 
+## Complete before the workshop
+
+### Participant laptop
+
+- Bring a laptop that can run Visual Studio Code, the .NET 10 SDK, and local
+  command-line tools. Have local installation rights, or ask IT to install the
+  required software before the session.
+- Install the current stable Visual Studio Code release, Git, .NET 10 SDK,
+  Node.js 22.19 or later, Azure CLI, and Azure Developer CLI.
+- Use Windows PowerShell or install PowerShell 7 when running the workshop on
+  macOS or Linux.
+- Install the C# Dev Kit and Foundry Toolkit extensions.
+- Confirm GitHub Copilot Chat is available in Visual Studio Code, **Agent**
+  mode is enabled, and organizational policy permits workspace MCP servers.
+- Install a current browser such as Microsoft Edge or Google Chrome.
+- Clone or download this repository before the session and run:
+
+  ```powershell
+  .\scripts\verify-prereqs.ps1
+  ```
+
+### Identity and network access
+
+- Use an Azure identity that can sign in to the workshop tenant and
+  subscription. Complete multifactor authentication before the session.
+- Confirm the laptop can reach the Azure portal, the Foundry project endpoint,
+  and the APIM gateway. If the resources use private networking, connect to the
+  required VPN and verify private DNS resolution.
+- Allow outbound HTTPS on port 443 to `login.microsoftonline.com`,
+  `portal.azure.com`, `management.azure.com`, `ai.azure.com`, the assigned
+  `*.services.ai.azure.com` project endpoint, and the assigned
+  `*.azure-api.net` APIM endpoint.
+- Allow access to `github.com`, `api.githubcopilot.com`,
+  `registry.npmjs.org`, `api.nuget.org`, and `marketplace.visualstudio.com`
+  for repository access, Copilot Chat, packages, and extensions.
+- Confirm the corporate proxy or firewall does not block or buffer Streamable
+  HTTP responses from the APIM MCP endpoint.
+
+### Shared Azure sandbox
+
+- Prepare an APIM instance in a supported tier and grant participants
+  permission to configure APIs, MCP servers, policies, and diagnostics.
+- Prepare a Microsoft Foundry project and grant participants the **Foundry
+  User** role. Grant **Foundry Project Manager** only when participants must
+  create or modify project connections.
+- Deploy a base model such as `gpt-4.1` with approximately 250,000 TPM or more,
+  and confirm sufficient subscription and regional quota for the expected
+  concurrent group.
+- Share the tenant, subscription, Foundry project endpoint, model deployment
+  name, APIM service name, and resource group before the workshop.
+- Use an isolated sandbox with synthetic data. Do not connect participant
+  exercises to production systems or confidential data.
+
+### Optional paths
+
+- For the Copilot Studio lab, provide a licensed environment where participants
+  can create or edit an agent and add MCP tools.
+- For the public Petstore path, allow outbound HTTPS access to
+  `petstore3.swagger.io` and treat the service as uncontrolled test data.
+
 ## Schedule
 
 | Lab | Phase | Duration | Result |

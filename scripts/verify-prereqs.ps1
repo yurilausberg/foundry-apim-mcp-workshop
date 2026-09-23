@@ -15,6 +15,9 @@ function Test-Command {
 }
 
 Test-Command dotnet
+Test-Command git
+Test-Command node
+Test-Command npm
 Test-Command az
 Test-Command azd
 
@@ -24,6 +27,14 @@ if ([version]$dotnetVersion -lt [version]"10.0.0") {
 }
 
 Write-Host "[OK] dotnet version $dotnetVersion"
+
+$nodeVersionText = node --version
+$nodeVersion = [version]$nodeVersionText.TrimStart("v")
+if ($nodeVersion -lt [version]"22.19.0") {
+    throw "Node.js 22.19 or later is required. Found $nodeVersionText."
+}
+
+Write-Host "[OK] Node.js version $nodeVersionText"
 
 $account = az account show --output json 2>$null | ConvertFrom-Json
 if (-not $account) {
