@@ -186,9 +186,25 @@ The MCP client must discover the operations selected as tools.
 
 1. Copy `.vscode/mcp.json.example` to `.vscode/mcp.json`.
 2. Replace the placeholder URL with the APIM MCP server URL.
-3. Run **MCP: List Servers** and start the server.
-4. In Copilot agent mode, enable the work-request tools.
-5. Ask:
+3. Save `.vscode/mcp.json`, then open the Command Palette with
+   **Ctrl+Shift+P**.
+4. Run **MCP: List Servers**. This command shows the MCP servers configured for
+   the current workspace.
+5. Select `work-request-workshop`.
+6. If the server is disabled, select **Enable**. VS Code normally starts an
+   enabled MCP server automatically when a chat request needs its tools. If the
+   menu offers **Start Server**, select it to start the connection immediately.
+7. If VS Code asks whether you trust the server, review the URL and confirm
+   only if it is the workshop APIM endpoint.
+8. Open the Chat view with **Ctrl+Alt+I** and select **Agent** mode.
+9. Select **Configure Tools** near the chat input, expand
+   `work-request-workshop`, and enable:
+
+   - `createAWorkRequest`
+   - `getAWorkRequest`
+   - `updateWorkRequestStatus`
+
+10. Ask:
 
    ```text
    Get work request WR-1001 and summarize its current status.
@@ -202,6 +218,11 @@ The MCP client must discover the operations selected as tools.
 
 ### Troubleshooting
 
+- If `work-request-workshop` is not listed, confirm the file is named
+  `.vscode/mcp.json`, not `.vscode/mcp.json.example`, and that it contains
+  valid JSON.
+- To inspect a connection failure, run **MCP: List Servers**, select
+  `work-request-workshop`, and choose **Show Output**.
 - A `401` normally means the client did not send the required header or token.
 - If streaming fails, disable frontend response-body logging at the global APIM scope.
 - Do not access `context.Response.Body` in an MCP server policy.
