@@ -39,12 +39,14 @@ Breaks and lunch are outside the six hours of workshop content.
    - `createWorkRequest`
    - `updateWorkRequestStatus`
 
-6. Apply each operation-level policy from `policies/mock-*.xml`.
+6. Select **All operations**, open the inbound policy editor, and apply
+   `policies/api-mock.xml` once at the API scope.
 7. Test all three operations from the APIM test console.
 
 The response payloads are stored as examples in the OpenAPI document. Each
-operation policy uses APIM's built-in `mock-response` policy to return the
-matching example without a backend service.
+operation defines a `200 application/json` response. The API-level policy uses
+APIM's built-in `mock-response` policy to select the matching example without a
+backend service.
 
 ### Checkpoint
 
