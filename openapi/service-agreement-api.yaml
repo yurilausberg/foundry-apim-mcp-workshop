@@ -1,0 +1,154 @@
+openapi: 3.0.3
+info:
+  title: Synthetic Service Agreement API
+  version: 1.0.0
+  description: A synthetic API for workshop use. It contains no customer data.
+servers:
+  - url: https://example.invalid
+paths:
+  /service-agreements/{agreementId}:
+    get:
+      operationId: getServiceAgreement
+      summary: Get a service agreement request
+      description: Returns a synthetic service agreement request by identifier.
+      parameters:
+        - name: agreementId
+          in: path
+          required: true
+          schema:
+            type: string
+          example: SA-1001
+      responses:
+        "200":
+          description: Service agreement request
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ServiceAgreement"
+        "404":
+          description: Agreement not found
+  /service-agreements:
+    post:
+      operationId: createServiceAgreement
+      summary: Create a service agreement request
+      description: Creates a synthetic draft service agreement request.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/CreateServiceAgreementRequest"
+      responses:
+        "201":
+          description: Created service agreement request
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ServiceAgreement"
+  /service-agreements/{agreementId}/status:
+    patch:
+      operationId: updateServiceAgreementStatus
+      summary: Update service agreement status
+      description: Updates the workflow status of a synthetic service agreement request.
+      parameters:
+        - name: agreementId
+          in: path
+          required: true
+          schema:
+            type: string
+          example: SA-1001
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/UpdateStatusRequest"
+      responses:
+        "200":
+          description: Updated service agreement request
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ServiceAgreement"
+components:
+  schemas:
+    ServiceAgreement:
+      type: object
+      required:
+        - id
+        - title
+        - requester
+        - status
+        - amount
+        - currency
+      properties:
+        id:
+          type: string
+          example: SA-1001
+        title:
+          type: string
+          example: Vegetation management inspection services
+        requester:
+          type: string
+          example: Operations Planning
+        status:
+          type: string
+          enum:
+            - Draft
+            - NeedsInformation
+            - ReadyForReview
+            - Approved
+            - Rejected
+          example: NeedsInformation
+        amount:
+          type: number
+          format: double
+          example: 25000
+        currency:
+          type: string
+          example: USD
+        missingInformation:
+          type: array
+          items:
+            type: string
+          example:
+            - Statement of work
+            - Cost center
+        updatedAt:
+          type: string
+          format: date-time
+          example: 2026-09-23T16:00:00Z
+    CreateServiceAgreementRequest:
+      type: object
+      required:
+        - title
+        - requester
+        - amount
+        - currency
+      properties:
+        title:
+          type: string
+        requester:
+          type: string
+        amount:
+          type: number
+          format: double
+        currency:
+          type: string
+        description:
+          type: string
+    UpdateStatusRequest:
+      type: object
+      required:
+        - status
+      properties:
+        status:
+          type: string
+          enum:
+            - Draft
+            - NeedsInformation
+            - ReadyForReview
+            - Approved
+            - Rejected
+        reason:
+          type: string

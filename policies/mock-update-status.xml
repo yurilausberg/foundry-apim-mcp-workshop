@@ -1,0 +1,30 @@
+<policies>
+  <inbound>
+    <base />
+    <return-response>
+      <set-status code="200" reason="OK" />
+      <set-header name="Content-Type" exists-action="override">
+        <value>application/json</value>
+      </set-header>
+      <set-body>{
+  "id": "SA-1001",
+  "title": "Vegetation management inspection services",
+  "requester": "Operations Planning",
+  "status": "ReadyForReview",
+  "amount": 25000,
+  "currency": "USD",
+  "missingInformation": [],
+  "updatedAt": "2026-09-29T20:15:00Z"
+}</set-body>
+    </return-response>
+  </inbound>
+  <backend>
+    <base />
+  </backend>
+  <outbound>
+    <base />
+  </outbound>
+  <on-error>
+    <base />
+  </on-error>
+</policies>

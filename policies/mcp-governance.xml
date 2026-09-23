@@ -1,0 +1,25 @@
+<policies>
+  <inbound>
+    <base />
+    <set-header name="x-correlation-id" exists-action="skip">
+      <value>@(Guid.NewGuid().ToString())</value>
+    </set-header>
+    <rate-limit-by-key
+      calls="20"
+      renewal-period="60"
+      counter-key="@(context.Request.IpAddress)" />
+    <trace source="foundry-apim-mcp-workshop" severity="information">
+      <message>MCP tool request received</message>
+      <metadata name="correlation-id" value="@(context.Request.Headers.GetValueOrDefault(&quot;x-correlation-id&quot;, &quot;n/a&quot;))" />
+    </trace>
+  </inbound>
+  <backend>
+    <base />
+  </backend>
+  <outbound>
+    <base />
+  </outbound>
+  <on-error>
+    <base />
+  </on-error>
+</policies>
