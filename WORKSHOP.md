@@ -221,6 +221,17 @@ The MCP client must discover the operations selected as tools.
 - If `work-request-workshop` is not listed, confirm the file is named
   `.vscode/mcp.json`, not `.vscode/mcp.json.example`, and that it contains
   valid JSON.
+- If the editor continues to show **Starting**, open Chat in **Agent** mode and
+  select **Configure Tools**. If the three work-request tools are listed, the
+  server is connected and the displayed status is stale.
+- If the tools are not listed, select **Cancel** beside the starting server,
+  run **Developer: Reload Window** from the Command Palette, then use
+  **MCP: List Servers** to disable and re-enable the server.
+- If MCP Inspector connects to the same URL but VS Code still shows
+  **Starting**, do not recreate the APIM MCP server. Treat the problem as a
+  VS Code client-state issue and use Inspector as the lab validation fallback.
+  This behavior is tracked in
+  [microsoft/vscode#336805](https://github.com/microsoft/vscode/issues/336805).
 - To inspect a connection failure, run **MCP: List Servers**, select
   `work-request-workshop`, and choose **Show Output**.
 - A `401` normally means the client did not send the required header or token.
