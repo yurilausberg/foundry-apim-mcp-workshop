@@ -34,7 +34,8 @@
 
 ## Azure access
 
-- An API Management instance in Developer, Basic, Basic v2, Standard, Standard v2, Premium, or Premium v2.
+- An API Management instance on a v2 SKU that supports MCP: Basic v2,
+  Standard v2, or Premium v2.
 - A Microsoft Foundry resource and project.
 - A base model deployment, such as `gpt-4.1`, with approximately 250,000
   tokens per minute (TPM) or more allocated for concurrent workshop use.

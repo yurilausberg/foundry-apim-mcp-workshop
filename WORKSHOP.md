@@ -40,8 +40,9 @@
 
 ### Shared Azure sandbox
 
-- Prepare an APIM instance in a supported tier and grant participants
-  permission to configure APIs, MCP servers, policies, and diagnostics.
+- Prepare an APIM instance on a v2 SKU that supports MCP, such as Basic v2,
+  Standard v2, or Premium v2. Grant participants permission to configure APIs,
+  MCP servers, policies, and diagnostics.
 - Prepare a Microsoft Foundry project and grant participants the **Foundry
   User** role. Grant **Foundry Project Manager** only when participants must
   create or modify project connections.
@@ -75,7 +76,8 @@ Breaks and lunch are outside the six hours of workshop content.
 
 ## Lab 0: Confirm the sandbox
 
-1. Confirm the APIM instance is in a supported tier.
+1. Confirm the APIM instance uses a supported v2 SKU, such as Basic v2,
+   Standard v2, or Premium v2.
 2. Confirm the Foundry project has a base model deployment, such as
    `gpt-4.1`.
 3. Confirm the model deployment has approximately 250,000 tokens per minute
