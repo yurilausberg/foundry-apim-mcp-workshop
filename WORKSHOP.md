@@ -112,7 +112,9 @@ https://petstore3.swagger.io/api/v3/openapi.json
 
 4. Do not add the `mock-response` policy. Requests must reach the public
    backend.
-5. For the MCP server, expose a small read-only tool set first, such as
+5. Open the API **Settings** tab, clear **Subscription required**, and save.
+   This allows workshop clients to test without an APIM subscription key.
+6. For the MCP server, expose a small read-only tool set first, such as
    `findPetsByStatus` and `getPetById`.
 
 Swagger Petstore is a third-party public demonstration service. It is not
