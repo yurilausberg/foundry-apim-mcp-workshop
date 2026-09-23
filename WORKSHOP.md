@@ -186,24 +186,20 @@ The MCP client must discover the operations selected as tools.
 
 1. Copy `.vscode/mcp.json.example` to `.vscode/mcp.json`.
 2. Replace the placeholder URL with the APIM MCP server URL.
-3. Save `.vscode/mcp.json`, then open the Command Palette with
-   **Ctrl+Shift+P**.
-4. Run **MCP: List Servers**. This command shows the MCP servers configured for
-   the current workspace.
-5. Select `work-request-workshop`.
-6. If the server is disabled, select **Enable**. VS Code normally starts an
-   enabled MCP server automatically when a chat request needs its tools. If the
-   menu offers **Start Server**, select it to start the connection immediately.
-7. If VS Code asks whether you trust the server, review the URL and confirm
-   only if it is the workshop APIM endpoint.
-8. Open the Chat view with **Ctrl+Alt+I** and select **Agent** mode.
-9. Select **Configure Tools** near the chat input, expand
-   `work-request-workshop`, and enable:
+3. Save `.vscode/mcp.json`. VS Code discovers the workspace MCP configuration
+   and starts the server when its tools are needed. Do not start it manually.
+4. Open Copilot Chat with **Ctrl+Alt+I** and select **Agent** mode.
+5. Select the **Configure Tools** icon near the chat input.
+6. Search for `work-request`.
+7. Find `work-request-workshop` and select **Refresh Tools**.
+8. Expand the server and select the checkbox for each tool:
 
    - `createAWorkRequest`
    - `getAWorkRequest`
    - `updateWorkRequestStatus`
 
+9. If VS Code asks whether you trust the server, review the URL and confirm
+   only if it is the workshop APIM endpoint.
 10. Ask:
 
    ```text
