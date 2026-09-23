@@ -6,16 +6,20 @@
       <set-header name="Content-Type" exists-action="override">
         <value>application/json</value>
       </set-header>
-      <set-body>{
-  "id": "WR-1001",
-  "title": "Facility inspection services",
-  "requester": "Operations Team",
-  "status": "ReadyForReview",
-  "amount": 25000,
-  "currency": "USD",
-  "missingInformation": [],
-  "updatedAt": "2026-09-29T20:15:00Z"
-}</set-body>
+      <set-body>@(
+        new Newtonsoft.Json.Linq.JObject(
+          new Newtonsoft.Json.Linq.JProperty("id", "WR-1001"),
+          new Newtonsoft.Json.Linq.JProperty("title", "Facility inspection services"),
+          new Newtonsoft.Json.Linq.JProperty("requester", "Operations Team"),
+          new Newtonsoft.Json.Linq.JProperty("status", "ReadyForReview"),
+          new Newtonsoft.Json.Linq.JProperty("amount", 25000),
+          new Newtonsoft.Json.Linq.JProperty("currency", "USD"),
+          new Newtonsoft.Json.Linq.JProperty(
+            "missingInformation",
+            new Newtonsoft.Json.Linq.JArray()),
+          new Newtonsoft.Json.Linq.JProperty("updatedAt", "2026-09-29T20:15:00Z")
+        ).ToString()
+      )</set-body>
     </return-response>
   </inbound>
   <backend>
