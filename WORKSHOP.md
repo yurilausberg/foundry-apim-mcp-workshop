@@ -42,15 +42,20 @@ Breaks and lunch are outside the six hours of workshop content.
 6. Open the API **Settings** tab, clear **Subscription required**, and save.
    This allows workshop clients to test without an APIM subscription key.
 7. Switch to the **Design** tab and select **All operations**.
-8. In **Inbound processing**, select **+ Add policy**.
-9. Select **Mock responses**.
-10. Select **200 OK, application/json**, then select **Save**.
+8. In **Inbound processing**, select the `</>` code editor.
+9. Keep the existing `<base />` element and add the `mock-response` line
+   directly after it:
+
+   ```xml
+   <inbound>
+       <base />
+       <mock-response status-code="200" content-type="application/json" />
+   </inbound>
+   ```
+
+10. Select **Save**.
 11. Confirm that **Mocking is enabled** appears for the API.
 12. Test all three operations from the APIM test console.
-
-As an alternative to the policy gallery, open the inbound policy code editor,
-add the `<mock-response>` element shown in `policies/api-mock.xml`, and select
-**Save**.
 
 Disabling **Subscription required** is for the isolated workshop sandbox only.
 Production APIs should use an approved authentication and authorization model.
