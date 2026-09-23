@@ -41,8 +41,8 @@ Breaks and lunch are outside the six hours of workshop content.
 
 6. Open the API **Settings** tab, clear **Subscription required**, and save.
    This allows workshop clients to test without an APIM subscription key.
-7. Select **All operations**, open the inbound policy editor, and apply
-   `policies/api-mock.xml` once at the API scope.
+7. Switch to the **Design** tab, select **All operations**, open the inbound
+   policy editor, and apply `policies/api-mock.xml` once at the API scope.
 8. Test all three operations from the APIM test console.
 
 Disabling **Subscription required** is for the isolated workshop sandbox only.
