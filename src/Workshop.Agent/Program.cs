@@ -34,8 +34,8 @@ var mcpTool = new HostedMcpServerTool(
 {
     AllowedTools =
     [
-        "getWorkRequest",
-        "createWorkRequest",
+        "getAWorkRequest",
+        "createAWorkRequest",
         "updateWorkRequestStatus"
     ],
     ApprovalMode = HostedMcpServerToolApprovalMode.AlwaysRequire

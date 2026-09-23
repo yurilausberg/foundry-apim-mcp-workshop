@@ -169,10 +169,18 @@ The MCP client must discover the operations selected as tools.
 4. Select **Streamable HTTP** as the transport.
 5. Paste the APIM MCP server URL into the server URL field and select
    **Connect**.
-6. Open **Tools**, refresh the tool list, and confirm the selected API
-   operations are available.
+6. Open **Tools**, select **List Tools**, and confirm these generated MCP tool
+   names are available:
+
+   - `createAWorkRequest`
+   - `getAWorkRequest`
+   - `updateWorkRequestStatus`
+
+   These MCP tool names differ from two of the OpenAPI operation IDs confirmed
+   in Lab 1. Use the names returned by **List Tools** in client allowlists.
+
 7. Select a read-only tool, enter its required arguments, and run it. For the
-   synthetic API, invoke `getWorkRequest` with `WR-1001`.
+   synthetic API, invoke `getAWorkRequest` with `WR-1001`.
 
 ### Test in Visual Studio Code
 
@@ -242,7 +250,7 @@ The MCP client must discover the operations selected as tools.
 
 ### Checkpoint
 
-The agent should select `getWorkRequest`, inspect the synthetic response, and
+The agent should select `getAWorkRequest`, inspect the synthetic response, and
 return a grounded recommendation.
 
 ## Lab 4: Add the Copilot Studio path
