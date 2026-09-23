@@ -144,8 +144,10 @@ external and uncontrolled.
 6. Enter a **Display name**, such as `Work Request Tools`.
 7. Confirm the required **Name** field contains a URL-safe value, such as
    `work-request-tools`.
-8. Create the MCP server and record the generated server URL. It should end in
-   `/mcp`.
+8. Create the MCP server.
+9. In the **MCP Servers** list, find the new server. In the **Server URL**
+   column, select the **Copy to clipboard** icon.
+10. Save the copied URL for the client configuration. It should end in `/mcp`.
 
 Do not add the governance policy yet. First validate the basic MCP connection.
 The policy is added once in Lab 5.
