@@ -139,11 +139,13 @@ external and uncontrolled.
 2. Select **Create MCP server**.
 3. Select **Expose an API as an MCP server**.
 4. Choose the API imported in Lab 1.
-5. Enter a **Display name**, such as `Work Request Tools`. This field is
-   required.
-6. Select the operations to expose as tools. For the static work-request path,
+5. Select the operations to expose as tools. For the static work-request path,
    select all three operations. For Petstore, start with read-only operations.
-7. Record the generated server URL. It should end in `/mcp`.
+6. Enter a **Display name**, such as `Work Request Tools`.
+7. Confirm the required **Name** field contains a URL-safe value, such as
+   `work-request-tools`.
+8. Create the MCP server and record the generated server URL. It should end in
+   `/mcp`.
 
 Do not add the governance policy yet. First validate the basic MCP connection.
 The policy is added once in Lab 5.
