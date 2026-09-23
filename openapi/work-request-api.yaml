@@ -25,6 +25,17 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/WorkRequest"
+              example:
+                id: WR-1001
+                title: Facility inspection services
+                requester: Operations Team
+                status: NeedsInformation
+                amount: 25000
+                currency: USD
+                missingInformation:
+                  - Statement of work
+                  - Cost center
+                updatedAt: "2026-09-23T16:00:00Z"
         "404":
           description: Work request not found
   /work-requests:
@@ -45,6 +56,15 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/WorkRequest"
+              example:
+                id: WR-1002
+                title: Synthetic workshop request
+                requester: Workshop Participant
+                status: Draft
+                amount: 25000
+                currency: USD
+                missingInformation: []
+                updatedAt: "2026-09-29T20:00:00Z"
   /work-requests/{requestId}/status:
     patch:
       operationId: updateWorkRequestStatus
@@ -70,6 +90,15 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/WorkRequest"
+              example:
+                id: WR-1001
+                title: Facility inspection services
+                requester: Operations Team
+                status: ReadyForReview
+                amount: 25000
+                currency: USD
+                missingInformation: []
+                updatedAt: "2026-09-29T20:15:00Z"
 components:
   schemas:
     WorkRequest:

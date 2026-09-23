@@ -42,6 +42,10 @@ Breaks and lunch are outside the six hours of workshop content.
 6. Apply each operation-level policy from `policies/mock-*.xml`.
 7. Test all three operations from the APIM test console.
 
+The response payloads are stored as examples in the OpenAPI document. Each
+operation policy uses APIM's built-in `mock-response` policy to return the
+matching example without a backend service.
+
 ### Checkpoint
 
 The API must return synthetic JSON without calling a customer backend.
