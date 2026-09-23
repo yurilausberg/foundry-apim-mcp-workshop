@@ -156,7 +156,9 @@ The MCP client must discover the operations selected as tools.
 2. Replace the placeholder URL with the APIM MCP server URL.
 3. Run **MCP: List Servers** and start the server.
 4. In Copilot agent mode, enable the work-request tools.
-5. Ask:
+5. When prompted for **Display name**, enter a recognizable name such as
+   `Work Request Tools`. This field is required.
+6. Ask:
 
    ```text
    Get work request WR-1001 and summarize its current status.
