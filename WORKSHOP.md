@@ -2,14 +2,14 @@
 
 ## Schedule
 
-| Phase | Duration | Result |
-|---|---:|---|
-| Orientation and scenario | 60 minutes | Shared architecture and success criteria |
-| APIM REST-to-MCP lab | 90 minutes | Working MCP endpoint |
-| Foundry agent lab | 75 minutes | Code-first agent using the MCP tools |
-| Copilot Studio path | 30 minutes | Low-code agent using the same tools |
-| Security and monitoring | 45 minutes | Governed sandbox design |
-| Demo and next steps | 45 minutes | End-to-end validation and action plan |
+| Lab | Phase | Duration | Result |
+|---|---|---:|---|
+| Lab 0 | Orientation, scenario, and sandbox confirmation | 60 minutes | Shared architecture, success criteria, and verified prerequisites |
+| Labs 1 and 2 | Import the API and expose it through APIM as MCP tools | 90 minutes | Tested REST API and working MCP endpoint |
+| Lab 3 | Build and run the Foundry agent | 75 minutes | Code-first agent using the MCP tools |
+| Lab 4 | Add the Copilot Studio path | 30 minutes | Low-code agent using the same tools |
+| Lab 5 | Apply security, governance, and monitoring | 45 minutes | Governed sandbox design |
+| Lab 6 | Demonstrate the complete pattern and define next steps | 45 minutes | End-to-end validation and action plan |
 
 Breaks and lunch are outside the six hours of workshop content.
 
