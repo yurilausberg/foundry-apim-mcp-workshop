@@ -142,7 +142,9 @@ external and uncontrolled.
 5. Select the operations to expose as tools. For the static work-request path,
    select all three operations. For Petstore, start with read-only operations.
 6. Record the generated server URL. It should end in `/mcp`.
-7. Apply `policies/mcp-governance.xml` at the MCP server scope.
+
+Do not add the governance policy yet. First validate the basic MCP connection.
+The policy is added once in Lab 5.
 
 ### Checkpoint
 
@@ -237,17 +239,21 @@ return a grounded recommendation.
 
 Start with the working sandbox. Add controls one at a time.
 
-1. Add rate limiting and a correlation trace with `policies/mcp-governance.xml`.
-2. Enable Application Insights or Azure Monitor diagnostics.
-3. Keep global frontend response payload logging at 0 bytes.
-4. Review inbound authentication options:
+1. In APIM, select **APIs**, then **MCP Servers**, then select the workshop MCP
+   server.
+2. Open **Policies**, select the code editor, and apply
+   `policies/mcp-governance.xml` once at the MCP server scope.
+3. Select **Save**.
+4. Enable Application Insights or Azure Monitor diagnostics.
+5. Keep global frontend response payload logging at 0 bytes.
+6. Review inbound authentication options:
 
    - APIM subscription key for a bounded workshop.
    - Entra ID and OAuth for delegated user access.
    - Managed identity for service-to-service access where supported.
 
-5. Decide which tools need explicit approval before execution.
-6. Separate read operations from state-changing operations.
+7. Decide which tools need explicit approval before execution.
+8. Separate read operations from state-changing operations.
 
 ## Lab 6: Demonstrate the complete pattern
 
