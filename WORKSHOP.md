@@ -92,24 +92,59 @@ shape. It is not a simulated data store:
 Use a real sandbox backend or a conditional APIM policy if the workshop needs
 record lookup, request validation, state changes, or negative-path behavior.
 
+### Optional live backend: Swagger Petstore
+
+For a workshop that needs real request processing without deploying a backend,
+use the public Swagger Petstore API:
+
+```text
+https://petstore3.swagger.io/api/v3/openapi.json
+```
+
+1. Import the OpenAPI document from the URL instead of importing
+   `openapi/work-request-api.yaml`.
+2. Set an API URL suffix such as `petstore`.
+3. Verify that the backend web service URL is:
+
+   ```text
+   https://petstore3.swagger.io/api/v3
+   ```
+
+4. Do not add the `mock-response` policy. Requests must reach the public
+   backend.
+5. For the MCP server, expose a small read-only tool set first, such as
+   `findPetsByStatus` and `getPetById`.
+
+Swagger Petstore is a third-party public demonstration service. It is not
+operated, monitored, or covered by an availability commitment from the
+workshop team. Its data, behavior, throttling, and availability can change
+without notice. Do not send confidential data, credentials, personal data, or
+production workloads to it.
+
 ### Checkpoint
 
-The API must return synthetic JSON without calling an organization backend.
-Participants should understand that the responses are fixed contract examples.
+For the static work-request path, the API must return synthetic JSON without
+calling an organization backend. Participants should understand that the
+responses are fixed contract examples.
+
+For the optional Petstore path, APIM must successfully forward a read request
+to the public backend. Participants should understand that the service is
+external and uncontrolled.
 
 ## Lab 2: Expose the API as an MCP server
 
 1. In APIM, select **APIs**, then **MCP Servers**.
 2. Select **Create MCP server**.
 3. Select **Expose an API as an MCP server**.
-4. Choose the synthetic work-request API.
-5. Expose the three operations as tools.
+4. Choose the API imported in Lab 1.
+5. Select the operations to expose as tools. For the static work-request path,
+   select all three operations. For Petstore, start with read-only operations.
 6. Record the generated server URL. It should end in `/mcp`.
 7. Apply `policies/mcp-governance.xml` at the MCP server scope.
 
 ### Checkpoint
 
-The MCP client must discover all three tools.
+The MCP client must discover the operations selected as tools.
 
 ### Test in Visual Studio Code
 
@@ -121,6 +156,12 @@ The MCP client must discover all three tools.
 
    ```text
    Get work request WR-1001 and summarize its current status.
+   ```
+
+   For the optional Petstore path, ask:
+
+   ```text
+   Find pets that are currently available.
    ```
 
 ### Troubleshooting
