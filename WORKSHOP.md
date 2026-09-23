@@ -206,11 +206,22 @@ The MCP client must discover the operations selected as tools.
    Get work request WR-1001 and summarize its current status.
    ```
 
-   For the optional Petstore path, ask:
+11. For the optional Petstore path, uncomment the `petstore-anon` entry in
+    `.vscode/mcp.json`, replace its placeholder URL with the copied Petstore MCP
+    server URL, and save the file.
+12. Select **Configure Tools** again, search for `petstore`, find
+    `petstore-anon`, and select **Refresh Tools**.
+13. Expand `petstore-anon` and select the checkbox for both read-only tools:
 
-   ```text
-   Find pets that are currently available.
-   ```
+    - `findPetById`: Returns a single pet by its numeric ID.
+    - `findsPetsByStatus`: Finds pets by status. Provide multiple status values
+      as a comma-separated string, such as `pending,available`.
+
+14. Ask:
+
+    ```text
+    Find pets that are currently available.
+    ```
 
 ### Troubleshooting
 

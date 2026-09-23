@@ -4,5 +4,10 @@
       "type": "http",
       "url": "https://your-apim-instance.azure-api.net/work-requests-mcp/mcp"
     }
+    // Optional Petstore path:
+    // ,"petstore-anon": {
+    //   "type": "http",
+    //   "url": "https://your-apim-instance.azure-api.net/petstore-anon/mcp"
+    // }
   }
 }
