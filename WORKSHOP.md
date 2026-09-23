@@ -48,9 +48,27 @@ operation defines a `200 application/json` response. The API-level policy uses
 APIM's built-in `mock-response` policy to select the matching example without a
 backend service.
 
+### Static mock limitations
+
+The APIM `mock-response` policy demonstrates the API contract and MCP tool
+shape. It is not a simulated data store:
+
+- GET does not validate `requestId`. Any ID returns the same OpenAPI response
+  example.
+- POST does not create or persist a record.
+- PATCH does not read the request body or update state. It returns the fixed
+  response example.
+- If APIM returns a schema-generated value such as the first `status` enum
+  value (`Draft`), update or re-import the latest OpenAPI definition so APIM
+  has the response examples.
+
+Use a real sandbox backend or a conditional APIM policy if the workshop needs
+record lookup, request validation, state changes, or negative-path behavior.
+
 ### Checkpoint
 
-The API must return synthetic JSON without calling a customer backend.
+The API must return synthetic JSON without calling an organization backend.
+Participants should understand that the responses are fixed contract examples.
 
 ## Lab 2: Expose the API as an MCP server
 
@@ -128,7 +146,8 @@ The MCP client must discover all three tools.
 
 ### Checkpoint
 
-The agent should select `getServiceAgreement`, inspect the synthetic record, and return a grounded recommendation.
+The agent should select `getWorkRequest`, inspect the synthetic response, and
+return a grounded recommendation.
 
 ## Lab 4: Add the Copilot Studio path
 
@@ -169,14 +188,17 @@ Get work request WR-1001 and explain what is blocking approval.
 ```
 
 ```text
-Create a draft work request for facility inspection services with a not-to-exceed amount of $25,000.
+Create a draft work request for facility inspection services with a not-to-exceed amount of $25,000. Show the proposed tool arguments before execution.
 ```
 
 ```text
-Update work request WR-1001 to ReadyForReview and explain what changed.
+Update work request WR-1001 to ReadyForReview. Show the proposed tool arguments before execution.
 ```
 
-For state-changing prompts, pause before execution and discuss approval, identity, audit, and rollback expectations.
+For state-changing prompts, pause before execution and discuss approval,
+identity, audit, and rollback expectations. The static APIM mock confirms the
+tool invocation contract, but it does not persist the create request or apply
+the status update.
 
 ## Closeout
 
