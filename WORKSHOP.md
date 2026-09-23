@@ -156,6 +156,24 @@ The policy is added once in Lab 5.
 
 The MCP client must discover the operations selected as tools.
 
+### Test with MCP Inspector
+
+1. From a terminal, start the Inspector:
+
+   ```powershell
+   npx @modelcontextprotocol/inspector
+   ```
+
+2. If `npx` asks to install the package, confirm the installation.
+3. Open the Inspector URL printed in the terminal.
+4. Select **Streamable HTTP** as the transport.
+5. Paste the APIM MCP server URL into the server URL field and select
+   **Connect**.
+6. Open **Tools**, refresh the tool list, and confirm the selected API
+   operations are available.
+7. Select a read-only tool, enter its required arguments, and run it. For the
+   synthetic API, invoke `getWorkRequest` with `WR-1001`.
+
 ### Test in Visual Studio Code
 
 1. Copy `.vscode/mcp.json.example` to `.vscode/mcp.json`.

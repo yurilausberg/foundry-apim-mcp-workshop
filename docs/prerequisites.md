@@ -3,6 +3,7 @@
 ## Local tools
 
 - .NET 10 SDK or later.
+- Node.js 22.19 or later for MCP Inspector.
 - Azure CLI.
 - Azure Developer CLI.
 - Visual Studio Code.
