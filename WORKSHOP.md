@@ -48,6 +48,16 @@ Breaks and lunch are outside the six hours of workshop content.
 Disabling **Subscription required** is for the isolated workshop sandbox only.
 Production APIs should use an approved authentication and authorization model.
 
+The API suffix supplies the `/work-requests` base path. The OpenAPI operation
+paths are relative to that suffix, so the final PATCH URL is:
+
+```text
+https://<apim-name>.azure-api.net/work-requests/WR-1001/status
+```
+
+The OpenAPI request examples prepopulate `WR-1001` and
+`status: ReadyForReview` in the APIM test console.
+
 The response payloads are stored as examples in the OpenAPI document. Each
 operation defines a `200 application/json` response. The API-level policy uses
 APIM's built-in `mock-response` policy to select the matching example without a

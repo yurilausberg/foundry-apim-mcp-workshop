@@ -6,7 +6,7 @@ info:
 servers:
   - url: https://example.invalid
 paths:
-  /work-requests/{requestId}:
+  /{requestId}:
     get:
       operationId: getWorkRequest
       summary: Get a work request
@@ -17,6 +17,8 @@ paths:
           required: true
           schema:
             type: string
+            default: WR-1001
+            example: WR-1001
           example: WR-1001
       responses:
         "200":
@@ -38,7 +40,7 @@ paths:
                 updatedAt: "2026-09-23T16:00:00Z"
         "404":
           description: Work request not found
-  /work-requests:
+  /:
     post:
       operationId: createWorkRequest
       summary: Create a work request
@@ -49,6 +51,12 @@ paths:
           application/json:
             schema:
               $ref: "#/components/schemas/CreateWorkRequest"
+            example:
+              title: Facility inspection services
+              requester: Operations Team
+              amount: 25000
+              currency: USD
+              description: Inspect the primary facility and document findings.
       responses:
         "200":
           description: Created work request
@@ -65,7 +73,7 @@ paths:
                 currency: USD
                 missingInformation: []
                 updatedAt: "2026-09-29T20:00:00Z"
-  /work-requests/{requestId}/status:
+  /{requestId}/status:
     patch:
       operationId: updateWorkRequestStatus
       summary: Update work request status
@@ -76,6 +84,8 @@ paths:
           required: true
           schema:
             type: string
+            default: WR-1001
+            example: WR-1001
           example: WR-1001
       requestBody:
         required: true
@@ -83,6 +93,9 @@ paths:
           application/json:
             schema:
               $ref: "#/components/schemas/UpdateStatusRequest"
+            example:
+              status: ReadyForReview
+              reason: Required information received
       responses:
         "200":
           description: Updated work request
