@@ -15,7 +15,10 @@
 
 - An API Management instance in Developer, Basic, Basic v2, Standard, Standard v2, Premium, or Premium v2.
 - A Microsoft Foundry resource and project.
-- A deployed model.
+- A base model deployment, such as `gpt-4.1`, with approximately 250,000
+  tokens per minute (TPM) or more allocated for concurrent workshop use.
+- Sufficient model quota in the deployment region. Foundry model quota is
+  shared at the subscription and region level.
 - Foundry User on the project for development.
 - Foundry Project Manager if project connections must be created or changed.
 - Permission to configure APIs, MCP servers, policies, and diagnostics in APIM.
@@ -25,7 +28,7 @@
 | Value | Example |
 |---|---|
 | Foundry project endpoint | `https://resource.services.ai.azure.com/api/projects/project-name` |
-| Model deployment name | `gpt-5.4-mini` |
+| Model deployment name | `gpt-4.1` |
 | APIM MCP endpoint | `https://instance.azure-api.net/work-requests-mcp/mcp` |
 
 ## Sandbox rules

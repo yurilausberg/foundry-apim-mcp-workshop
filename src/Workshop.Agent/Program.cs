@@ -17,7 +17,7 @@ var projectEndpoint = new Uri(
 
 var deploymentName =
     Environment.GetEnvironmentVariable("AZURE_AI_MODEL_DEPLOYMENT_NAME")
-    ?? "gpt-5.4-mini";
+    ?? "gpt-4.1";
 
 var mcpServerEndpoint =
     Environment.GetEnvironmentVariable("MCP_SERVER_ENDPOINT")
