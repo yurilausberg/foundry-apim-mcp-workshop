@@ -23,7 +23,8 @@ Foundry code-first agent   Copilot Studio agent
 
 ## Repository contents
 
-- `WORKSHOP.md`: Step-by-step workshop instructions.
+- `WORKSHOP.md`: Workshop preparation, schedule, and lab navigation.
+- `docs/labs/`: Step-by-step instructions for Labs 0 through 6.
 - `openapi/work-request-api.yaml`: Synthetic API contract.
 - `policies/`: APIM policy examples for mock responses, anonymous governance,
   and optional delegated Entra authentication.
