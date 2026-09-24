@@ -50,25 +50,57 @@ azd env new foundry-apim-mcp-workshop
 
 ## 3. Connect to the existing Foundry project
 
-Copy the project endpoint and model deployment name from the target Foundry
-project. The endpoint has this format:
+Copy these values from the target Foundry project:
+
+- Project endpoint.
+- Full project ARM resource ID.
+- Existing model deployment name.
+
+The endpoint has this format:
 
 ```text
 https://<account>.services.ai.azure.com/api/projects/<project>
 ```
 
+The project ARM resource ID has this format:
+
+```text
+/subscriptions/<subscription-id>/resourceGroups/<resource-group>/providers/Microsoft.CognitiveServices/accounts/<account>/projects/<project>
+```
+
+Use **JSON View** in the Azure portal to copy the project resource ID, or query
+it when you know the resource group, Foundry account name, and project name:
+
+```powershell
+$projectId = az cognitiveservices account project show `
+  --subscription "<project-subscription-id>" `
+  --resource-group "<resource-group>" `
+  --name "<foundry-account-name>" `
+  --project-name "<project-name>" `
+  --query id `
+  --output tsv
+```
+
 Set the required azd values:
 
 ```powershell
-$subscriptionId = az account show --query id --output tsv
-$tenantId = az account show --query tenantId --output tsv
 $projectEndpoint = "https://<account>.services.ai.azure.com/api/projects/<project>"
+$projectId = "<full-project-arm-resource-id>"
+$subscriptionId = ($projectId -split "/")[2]
+$tenantId = az account show `
+  --subscription $subscriptionId `
+  --query tenantId `
+  --output tsv
 
 azd env set AZURE_SUBSCRIPTION_ID $subscriptionId
 azd env set AZURE_TENANT_ID $tenantId
 azd env set AZURE_AI_PROJECT_ENDPOINT $projectEndpoint
+azd env set AZURE_AI_PROJECT_ID $projectId
 azd env set AZURE_AI_MODEL_DEPLOYMENT_NAME "gpt-4.1"
 ```
+
+Use the subscription from the project ARM resource ID. It can differ from the
+subscription currently selected by Azure CLI.
 
 The `ai-project` service in `azure.yaml` connects to this existing project. It
 does not create another project. Foundry injects `FOUNDRY_PROJECT_ENDPOINT`
@@ -173,6 +205,7 @@ azd ai agent invoke petstore-workshop-agent `
 | Error | Resolution |
 |---|---|
 | `AZURE_SUBSCRIPTION_ID is required` | Set it from `az account show --query id --output tsv`. |
+| `Microsoft Foundry project ID is required` | Set the full project ARM resource ID as `AZURE_AI_PROJECT_ID`. The endpoint URL is not the project ID. |
 | `missing_project_endpoint` | Set `AZURE_AI_PROJECT_ENDPOINT`, then run `azd provision --no-prompt`. |
 | Missing `infra\main.bicep` during `azd provision` | Confirm `azure.yaml` retains `infra.provider: microsoft.foundry`. |
 | Missing `PETSTORE_MCP_SERVER_ENDPOINT` in `agent doctor` | Configure the optional endpoint or deploy only the named work-request service. |

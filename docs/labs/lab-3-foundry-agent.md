@@ -290,6 +290,10 @@ has already configured. Run the commands from the repository root.
    Do not run bare `azd deploy`. The repository contains two agent services,
    and the bare command attempts to deploy both.
 
+   If deployment reports that `AZURE_AI_PROJECT_ID` is not set, ask the
+   facilitator to complete the
+   [advanced azd project setup](../azd-hosted-agent-deployment.md#3-connect-to-the-existing-foundry-project).
+
 3. Confirm that the version is active:
 
    ```powershell
