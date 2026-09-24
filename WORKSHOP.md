@@ -507,11 +507,50 @@ auto-approved read-only tools and leaves the approval-required list empty.
 `PETSTORE_MCP_SERVER_ENDPOINT` supplies the same endpoint to the optional
 Petstore hosted-agent service.
 
-### Optional extension: save a hosted agent version
+### Optional extension: deploy the agent to Foundry Agent Service
 
 The local `dotnet run` process is temporary and does not create an agent entry
-in the Foundry UI. Participants need the **Foundry Project Manager** role to
-deploy a hosted agent.
+in the Foundry UI. This extension performs a real deployment of the .NET
+application as a hosted agent. It is optional in the workshop because it
+requires additional time and the **Foundry Project Manager** role.
+
+#### What gets deployed
+
+The deployment creates a named, versioned hosted agent inside the selected
+Foundry project. Foundry Agent Service provides:
+
+- A dedicated endpoint for the Responses protocol.
+- A dedicated Microsoft Entra agent identity.
+- Managed compute, scaling, session lifecycle, and observability.
+- A per-session, VM-isolated sandbox that runs the agent application.
+- An immutable agent version for each successful deployment.
+
+The deployed process is not an Azure Container App that participants create or
+manage. Foundry Agent Service owns the runtime infrastructure and starts the
+agent sandbox when a session needs it. The hosted .NET application still calls
+the Foundry model deployment and the APIM MCP endpoint at runtime.
+
+```text
+Client
+    -> Foundry hosted-agent Responses endpoint
+    -> managed .NET agent sandbox
+    -> Foundry model deployment
+    -> APIM-hosted MCP server
+    -> synthetic REST operation
+```
+
+#### Code deployment versus container deployment
+
+This workshop uses **Code** with **Remote** package mode. Foundry Toolkit
+packages the source as a ZIP, uploads it, restores the dependencies declared in
+the `.csproj`, and prepares the managed runtime image. Participants do not need
+a Dockerfile, local Docker installation, or customer-managed Azure Container
+Registry for this path.
+
+The Toolkit also supports **Container** deployment for applications that need a
+custom image, operating-system packages, or custom Dockerfile behavior. That
+path builds or references an image in Azure Container Registry. It is not used
+in this workshop.
 
 The simplest workshop path uses the Foundry Toolkit extension:
 
@@ -519,7 +558,7 @@ The simplest workshop path uses the Foundry Toolkit extension:
 2. In Visual Studio Code, open the Command Palette.
 3. Run **Foundry Toolkit: Deploy Hosted Agent**.
 4. Select the workshop Foundry project.
-5. Choose **Code** as the deployment method.
+5. Choose **Code** as the deployment method and **Remote** as the package mode.
 6. Confirm the `work-request-workshop-agent` name, .NET 10 runtime, model
    deployment, and environment values.
 7. Select **Review + Deploy** and wait for the version to become active.
@@ -555,6 +594,11 @@ When using **Foundry Toolkit: Deploy Hosted Agent**, copy
 `.env.petstore.example` to `.env`, provide the real endpoint values, and deploy
 a new agent named `petstore-workshop-agent`. The review page should show .NET
 10, `dotnet Workshop.Agent.dll`, and 1 CPU / 2 GiB memory.
+
+For platform details, see
+[Hosted agents in Foundry Agent Service](https://learn.microsoft.com/azure/foundry/agents/concepts/hosted-agents)
+and
+[Deploy a hosted agent from source code](https://learn.microsoft.com/azure/foundry/agents/how-to/deploy-hosted-agent-code).
 
 ## Lab 4: Add the Copilot Studio path
 
