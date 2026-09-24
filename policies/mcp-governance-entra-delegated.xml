@@ -1,0 +1,44 @@
+<policies>
+  <inbound>
+    <base />
+    <validate-azure-ad-token
+      tenant-id="{{entra-tenant-id}}"
+      header-name="Authorization"
+      failed-validation-httpcode="401"
+      failed-validation-error-message="Unauthorized. Access token is missing or invalid."
+      output-token-variable-name="validated-jwt">
+      <client-application-ids>
+        <application-id>{{entra-client-application-id}}</application-id>
+      </client-application-ids>
+      <audiences>
+        <audience>{{entra-mcp-audience}}</audience>
+      </audiences>
+      <required-claims>
+        <claim name="scp" match="any" separator=" ">
+          <value>{{entra-mcp-scope}}</value>
+        </claim>
+      </required-claims>
+    </validate-azure-ad-token>
+    <set-header name="x-correlation-id" exists-action="skip">
+      <value>@(Guid.NewGuid().ToString())</value>
+    </set-header>
+    <rate-limit-by-key
+      calls="20"
+      renewal-period="60"
+      counter-key="@(context.Request.IpAddress)" />
+    <trace source="foundry-apim-mcp-workshop" severity="information">
+      <message>Authenticated MCP tool request received</message>
+      <metadata name="authentication-mode" value="entra-delegated" />
+      <metadata name="correlation-id" value="@(context.Request.Headers.GetValueOrDefault(&quot;x-correlation-id&quot;, &quot;n/a&quot;))" />
+    </trace>
+  </inbound>
+  <backend>
+    <base />
+  </backend>
+  <outbound>
+    <base />
+  </outbound>
+  <on-error>
+    <base />
+  </on-error>
+</policies>

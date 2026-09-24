@@ -26,11 +26,17 @@
 | MCP streaming fails | Remove response-body policy access and set global frontend response logging to 0 bytes |
 | Foundry authentication fails | Run `az login`, verify the tenant, and confirm Foundry User on the project |
 | Agent cannot call MCP | Validate the endpoint with Visual Studio Code first, then check the agent environment value |
+| Entra-enabled MCP returns 401 | Check token expiry, `aud`, client application ID, and the delegated `scp` value |
+| Inspector cannot start OAuth sign-in | Use a separately acquired bearer token unless OAuth discovery metadata and a compatible client registration are configured |
 | Copilot Studio setup takes too long | Demonstrate the prepared agent and use the remaining time for governance comparison |
 
 ## Time protection
 
 - Do not spend more than 15 minutes debugging one participant environment.
 - Keep a prepared MCP endpoint available for the Foundry and Copilot Studio labs.
-- Treat OAuth as an extension if the base endpoint is not working by the security block.
+- Treat delegated OAuth as an extension after the anonymous endpoint works.
+- Use `mcp-governance.xml` for recovery. Use
+  `mcp-governance-entra-delegated.xml` only for the optional authenticated path.
+- Acquire a fresh facilitator token shortly before the security demonstration.
+  Never place it in the repository, workshop files, or screenshots.
 - Preserve the final 20 minutes for owners, decisions, and next steps.

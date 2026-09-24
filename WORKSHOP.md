@@ -385,14 +385,45 @@ Start with the working sandbox. Add controls one at a time.
 3. Select **Save**.
 4. Enable Application Insights or Azure Monitor diagnostics.
 5. Keep global frontend response payload logging at 0 bytes.
-6. Review inbound authentication options:
+6. Note that `mcp-governance.xml` is the anonymous sandbox baseline. It adds
+   correlation, rate limiting, and tracing, but it does not authenticate the
+   caller.
+7. Review inbound authentication options:
 
    - APIM subscription key for a bounded workshop.
    - Entra ID and OAuth for delegated user access.
    - Managed identity for service-to-service access where supported.
 
-7. Decide which tools need explicit approval before execution.
-8. Separate read operations from state-changing operations.
+8. Decide which tools need explicit approval before execution.
+9. Separate read operations from state-changing operations.
+
+### Optional extension: delegated Entra OAuth
+
+Use this extension only after the anonymous MCP endpoint works.
+
+1. Follow [Optional Microsoft Entra delegated OAuth](docs/entra-delegated-oauth.md)
+   to configure the protected API registration, public client registration,
+   delegated scope, consent, and APIM named values.
+2. Replace `policies/mcp-governance.xml` with
+   `policies/mcp-governance-entra-delegated.xml`. Do not apply both policy
+   files. The Entra policy includes the baseline governance controls.
+3. Save the policy and confirm that an anonymous MCP Inspector connection now
+   receives HTTP 401.
+4. Acquire a delegated access token. The APIM developer portal token generator
+   is acceptable for a one-time workshop test.
+5. In MCP Inspector, add this custom HTTP header:
+
+   ```text
+   Authorization: Bearer <access-token>
+   ```
+
+6. Reconnect, list the tools, and invoke a read-only tool.
+
+Authorization Code with PKCE is the recommended flow for an interactive public
+client. Do not use a client secret for this client. APIM token validation does
+not by itself enable automatic OAuth sign-in in MCP Inspector. Automatic sign-in
+requires MCP protected-resource metadata, a `WWW-Authenticate` challenge, and a
+compatible pre-registered client.
 
 ## Lab 6: Demonstrate the complete pattern
 

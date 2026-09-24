@@ -25,11 +25,14 @@ Foundry code-first agent   Copilot Studio agent
 
 - `WORKSHOP.md`: Step-by-step workshop instructions.
 - `openapi/work-request-api.yaml`: Synthetic API contract.
-- `policies/`: APIM policy examples for mock responses and governance.
+- `policies/`: APIM policy examples for mock responses, anonymous governance,
+  and optional delegated Entra authentication.
 - `src/Workshop.Agent/`: Current .NET hosted-agent starter.
 - `docs/architecture.md`: Reference architecture and design notes.
 - `docs/prerequisites.md`: Environment and access checklist.
 - `docs/facilitator-guide.md`: Timing, checkpoints, and recovery paths.
+- `docs/entra-delegated-oauth.md`: Optional delegated OAuth setup and MCP
+  Inspector testing guidance.
 - `scripts/verify-prereqs.ps1`: Local prerequisite checks.
 
 ## Quick start
