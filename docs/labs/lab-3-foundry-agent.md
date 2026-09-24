@@ -293,6 +293,7 @@ has already configured. Run the commands from the repository root.
    If deployment reports that `AZURE_AI_PROJECT_ID` is not set, ask the
    facilitator to complete the
    [advanced azd project setup](../azd-hosted-agent-deployment.md#3-connect-to-the-existing-foundry-project).
+   Use the same guide if deployment reports that `AZURE_LOCATION` is not set.
 
 3. Confirm that the version is active:
 

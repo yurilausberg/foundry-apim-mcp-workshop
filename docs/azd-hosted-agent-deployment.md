@@ -91,9 +91,14 @@ $tenantId = az account show `
   --subscription $subscriptionId `
   --query tenantId `
   --output tsv
+$projectLocation = az resource show `
+  --ids $projectId `
+  --query location `
+  --output tsv
 
 azd env set AZURE_SUBSCRIPTION_ID $subscriptionId
 azd env set AZURE_TENANT_ID $tenantId
+azd env set AZURE_LOCATION $projectLocation
 azd env set AZURE_AI_PROJECT_ENDPOINT $projectEndpoint
 azd env set AZURE_AI_PROJECT_ID $projectId
 azd env set AZURE_AI_MODEL_DEPLOYMENT_NAME "gpt-4.1"
@@ -206,6 +211,7 @@ azd ai agent invoke petstore-workshop-agent `
 |---|---|
 | `AZURE_SUBSCRIPTION_ID is required` | Set it from `az account show --query id --output tsv`. |
 | `Microsoft Foundry project ID is required` | Set the full project ARM resource ID as `AZURE_AI_PROJECT_ID`. The endpoint URL is not the project ID. |
+| `AZURE_LOCATION is not set` | Query the project resource location and save it as `AZURE_LOCATION`. Code deployment must use the Foundry project region. |
 | `missing_project_endpoint` | Set `AZURE_AI_PROJECT_ENDPOINT`, then run `azd provision --no-prompt`. |
 | Missing `infra\main.bicep` during `azd provision` | Confirm `azure.yaml` retains `infra.provider: microsoft.foundry`. |
 | Missing `PETSTORE_MCP_SERVER_ENDPOINT` in `agent doctor` | Configure the optional endpoint or deploy only the named work-request service. |
