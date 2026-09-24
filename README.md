@@ -28,6 +28,9 @@ Foundry code-first agent   Copilot Studio agent
 - `policies/`: APIM policy examples for mock responses, anonymous governance,
   and optional delegated Entra authentication.
 - `src/Workshop.Agent/`: Current .NET hosted-agent starter.
+- `src/Workshop.Agent/.env.example`: Work-request MCP agent configuration.
+- `src/Workshop.Agent/.env.petstore.example`: Optional read-only Petstore MCP
+  agent configuration.
 - `docs/architecture.md`: Reference architecture and design notes.
 - `docs/prerequisites.md`: Environment and access checklist.
 - `docs/facilitator-guide.md`: Timing, checkpoints, and recovery paths.
@@ -57,6 +60,7 @@ Foundry code-first agent   Copilot Studio agent
 - Microsoft Agent Framework hosted-agent pattern.
 - Foundry project endpoint authentication through `DefaultAzureCredential`.
 - APIM Streamable HTTP MCP endpoint.
+- Environment-configured MCP tool allowlists and approval boundaries.
 - Synthetic data and APIM mock policies for a safe sandbox.
 
 ## Source lineage

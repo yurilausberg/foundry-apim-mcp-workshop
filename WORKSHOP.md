@@ -327,9 +327,17 @@ The MCP client must discover the operations selected as tools.
    - `FOUNDRY_PROJECT_ENDPOINT`
    - `AZURE_AI_MODEL_DEPLOYMENT_NAME`
    - `MCP_SERVER_ENDPOINT`
+   - `MCP_SERVER_NAME`
+   - `MCP_AUTO_APPROVED_TOOLS`
+   - `MCP_APPROVAL_REQUIRED_TOOLS`
+   - `AGENT_NAME`
+   - `AGENT_DESCRIPTION`
    - `AZURE_TOKEN_CREDENTIALS=AzureCliCredential`
 
-   The final setting makes local development use the identity from `az login`
+   The tool lists are comma-separated APIM-generated MCP tool names. A tool
+   must appear in only one list. The agent name and description identify the
+   selected profile. The final setting makes local development use the identity
+   from `az login`
    instead of probing the Azure managed identity endpoint. Keep this setting in
    the local `.env` file only. Do not add it to `azure.yaml`, because a deployed
    hosted agent should use its Azure identity.
@@ -381,6 +389,32 @@ it again.
 The agent should select `getAWorkRequest`, inspect the synthetic response, and
 return a grounded recommendation. Read operations run without an approval
 round-trip. Create and status-update operations still require approval.
+
+### Optional extension: use the Petstore MCP server
+
+The agent code is configuration-driven and does not require a Petstore-specific
+code change.
+
+1. Stop the local agent.
+2. Replace the local environment file:
+
+   ```powershell
+   Copy-Item `
+     .\src\Workshop.Agent\.env.petstore.example `
+     .\src\Workshop.Agent\.env `
+     -Force
+   ```
+
+3. Set the Foundry project endpoint, model deployment, and Petstore MCP endpoint.
+4. Start the agent again.
+5. Repeat the Responses request with this input:
+
+   ```text
+   Find available pets. Summarize the count and show the ID, name, and status.
+   ```
+
+The Petstore template enables `findPetById` and `findsPetsByStatus` as
+auto-approved read-only tools and leaves the approval-required list empty.
 
 ### Optional extension: save a hosted agent version
 

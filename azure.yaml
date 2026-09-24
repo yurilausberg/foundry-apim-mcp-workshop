@@ -26,6 +26,10 @@ services:
       AZURE_AI_MODEL_DEPLOYMENT_NAME: ${AZURE_AI_MODEL_DEPLOYMENT_NAME}
       MCP_SERVER_ENDPOINT: ${MCP_SERVER_ENDPOINT}
       MCP_SERVER_NAME: work_request_tools
+      MCP_AUTO_APPROVED_TOOLS: getAWorkRequest
+      MCP_APPROVAL_REQUIRED_TOOLS: createAWorkRequest,updateWorkRequestStatus
+      AGENT_NAME: work-request-workshop-agent
+      AGENT_DESCRIPTION: Workshop agent using work-request tools exposed through APIM and MCP
 
 infra:
   provider: microsoft.foundry

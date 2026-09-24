@@ -26,30 +26,58 @@ var mcpServerEndpoint =
 
 var mcpServerName =
     Environment.GetEnvironmentVariable("MCP_SERVER_NAME")
-    ?? "work_request_tools";
+    ?? "workshop_tools";
 
-var readMcpTool = new HostedMcpServerTool(
-    serverName: $"{mcpServerName}_read",
-    serverAddress: mcpServerEndpoint)
-{
-    AllowedTools =
-    [
-        "getAWorkRequest"
-    ],
-    ApprovalMode = HostedMcpServerToolApprovalMode.NeverRequire
-};
+var autoApprovedTools = ParseToolNames("MCP_AUTO_APPROVED_TOOLS");
+var approvalRequiredTools = ParseToolNames("MCP_APPROVAL_REQUIRED_TOOLS");
 
-var writeMcpTool = new HostedMcpServerTool(
-    serverName: $"{mcpServerName}_write",
-    serverAddress: mcpServerEndpoint)
+if (autoApprovedTools.Length == 0 && approvalRequiredTools.Length == 0)
 {
-    AllowedTools =
-    [
-        "createAWorkRequest",
-        "updateWorkRequestStatus"
-    ],
-    ApprovalMode = HostedMcpServerToolApprovalMode.AlwaysRequire
-};
+    throw new InvalidOperationException(
+        "Set MCP_AUTO_APPROVED_TOOLS, MCP_APPROVAL_REQUIRED_TOOLS, or both.");
+}
+
+var duplicateTool = autoApprovedTools
+    .Intersect(approvalRequiredTools, StringComparer.Ordinal)
+    .FirstOrDefault();
+
+if (duplicateTool is not null)
+{
+    throw new InvalidOperationException(
+        $"MCP tool '{duplicateTool}' cannot be both auto-approved and approval-required.");
+}
+
+List<AITool> mcpTools = [];
+
+if (autoApprovedTools.Length > 0)
+{
+    mcpTools.Add(new HostedMcpServerTool(
+        serverName: $"{mcpServerName}_auto",
+        serverAddress: mcpServerEndpoint)
+    {
+        AllowedTools = autoApprovedTools,
+        ApprovalMode = HostedMcpServerToolApprovalMode.NeverRequire
+    });
+}
+
+if (approvalRequiredTools.Length > 0)
+{
+    mcpTools.Add(new HostedMcpServerTool(
+        serverName: $"{mcpServerName}_approval",
+        serverAddress: mcpServerEndpoint)
+    {
+        AllowedTools = approvalRequiredTools,
+        ApprovalMode = HostedMcpServerToolApprovalMode.AlwaysRequire
+    });
+}
+
+var agentName =
+    Environment.GetEnvironmentVariable("AGENT_NAME")
+    ?? "mcp-workshop-agent";
+
+var agentDescription =
+    Environment.GetEnvironmentVariable("AGENT_DESCRIPTION")
+    ?? "Workshop agent using tools exposed through APIM and MCP";
 
 Azure.Core.TokenCredential credential =
     string.Equals(
@@ -65,15 +93,17 @@ AIAgent agent = new AIProjectClient(
     .AsAIAgent(
         model: deploymentName,
         instructions: """
-            You help workshop participants evaluate synthetic work requests.
-            Use the available MCP tools for work-request data.
+            You help workshop participants use tools exposed through MCP.
+            Use the available tools whenever the answer depends on tool data.
+            Treat all tool data as synthetic or public demonstration data unless
+            the user explicitly provides another approved context.
             Never claim the data is from a production or customer system.
-            Explain the evidence used for every recommendation.
-            Treat create and status-update operations as state-changing actions.
+            Explain which tool results support your answer.
+            Do not execute approval-required actions until the user confirms.
             """,
-        name: "work-request-workshop-agent",
-        description: "Workshop agent using work-request tools exposed through APIM and MCP",
-        tools: [readMcpTool, writeMcpTool]);
+        name: agentName,
+        description: agentDescription,
+        tools: mcpTools);
 
 var builder = AgentHost.CreateBuilder(args);
 builder.Services.AddFoundryResponses(agent);
@@ -83,3 +113,16 @@ builder.RegisterProtocol(
 
 var app = builder.Build();
 app.Run();
+
+static string[] ParseToolNames(string variableName)
+{
+    var value = Environment.GetEnvironmentVariable(variableName);
+
+    return string.IsNullOrWhiteSpace(value)
+        ? []
+        : value.Split(
+            ',',
+            StringSplitOptions.RemoveEmptyEntries | StringSplitOptions.TrimEntries)
+            .Distinct(StringComparer.Ordinal)
+            .ToArray();
+}
