@@ -412,7 +412,9 @@ lab packages the same source and creates an immutable Foundry agent version.
    dotnet run --project .\src\Workshop.Agent\Workshop.Agent.csproj
    ```
 
-5. In another terminal, invoke the Responses endpoint:
+5. Test the Responses endpoint with PowerShell or Agent Inspector.
+
+   **Option A: PowerShell**
 
    ```powershell
    $body = @{
@@ -436,6 +438,34 @@ lab packages the same source and creates an immutable Foundry agent version.
    `Invoke-RestMethod` converts the JSON response into nested PowerShell
    objects. The final pipeline extracts and prints the assistant's readable
    text instead of displaying `content=System.Object[]`.
+
+   **Option B: Foundry Agent Inspector**
+
+   Agent Inspector provides a visual view of the complete agent run, including
+   the response, streaming events, MCP tool calls, timing, and run timeline.
+   It connects to the agent process but does not start it.
+
+   - Keep the terminal from step 4 running.
+   - In Visual Studio Code, press `Ctrl+Shift+P`.
+   - Run **Foundry Toolkit: Open Agent Inspector**.
+   - Select the **Responses** protocol.
+   - Connect to `http://localhost:8088`. If the connection form requires the
+     full endpoint, use `http://localhost:8088/responses`.
+   - Send this prompt:
+
+     ```text
+     Review work request WR-1001 and recommend the next action.
+     ```
+
+   If port 8088 is already in use, stop the local agent and start it on another
+   port:
+
+   ```powershell
+   $env:PORT = "8090"
+   dotnet run --project .\src\Workshop.Agent\Workshop.Agent.csproj
+   ```
+
+   Then connect Agent Inspector to `http://localhost:8090`.
 
 If the response reports `ManagedIdentityCredential authentication failed` and
 references `169.254.169.254`, confirm the local `.env` contains
