@@ -25,6 +25,7 @@
 | MCP tools are missing | Verify the selected operations and their unique `operationId` values |
 | MCP streaming fails | Remove response-body policy access and set global frontend response logging to 0 bytes |
 | Foundry authentication fails | Run `az login`, verify the tenant, and confirm Foundry User on the project |
+| Local agent tries `169.254.169.254` | Set `AZURE_TOKEN_CREDENTIALS=AzureCliCredential` in the local `.env`, then restart the agent |
 | Agent cannot call MCP | Validate the endpoint with Visual Studio Code first, then check the agent environment value |
 | Entra-enabled MCP returns 401 | Check token expiry, `aud`, client application ID, and the delegated `scp` value |
 | Inspector cannot start OAuth sign-in | Use a separately acquired bearer token unless OAuth discovery metadata and a compatible client registration are configured |

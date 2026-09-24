@@ -327,6 +327,12 @@ The MCP client must discover the operations selected as tools.
    - `FOUNDRY_PROJECT_ENDPOINT`
    - `AZURE_AI_MODEL_DEPLOYMENT_NAME`
    - `MCP_SERVER_ENDPOINT`
+   - `AZURE_TOKEN_CREDENTIALS=AzureCliCredential`
+
+   The final setting makes local development use the identity from `az login`
+   instead of probing the Azure managed identity endpoint. Keep this setting in
+   the local `.env` file only. Do not add it to `azure.yaml`, because a deployed
+   hosted agent should use its Azure identity.
 
 3. Authenticate:
 
@@ -355,10 +361,16 @@ The MCP client must discover the operations selected as tools.
      -Body $body
    ```
 
+If the response reports `ManagedIdentityCredential authentication failed` and
+references `169.254.169.254`, confirm the local `.env` contains
+`AZURE_TOKEN_CREDENTIALS=AzureCliCredential`, stop the running agent, and start
+it again.
+
 ### Checkpoint
 
 The agent should select `getAWorkRequest`, inspect the synthetic response, and
-return a grounded recommendation.
+return a grounded recommendation. Read operations run without an approval
+round-trip. Create and status-update operations still require approval.
 
 ## Lab 4: Add the Copilot Studio path
 

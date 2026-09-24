@@ -28,22 +28,40 @@ var mcpServerName =
     Environment.GetEnvironmentVariable("MCP_SERVER_NAME")
     ?? "work_request_tools";
 
-var mcpTool = new HostedMcpServerTool(
-    serverName: mcpServerName,
+var readMcpTool = new HostedMcpServerTool(
+    serverName: $"{mcpServerName}_read",
     serverAddress: mcpServerEndpoint)
 {
     AllowedTools =
     [
-        "getAWorkRequest",
+        "getAWorkRequest"
+    ],
+    ApprovalMode = HostedMcpServerToolApprovalMode.NeverRequire
+};
+
+var writeMcpTool = new HostedMcpServerTool(
+    serverName: $"{mcpServerName}_write",
+    serverAddress: mcpServerEndpoint)
+{
+    AllowedTools =
+    [
         "createAWorkRequest",
         "updateWorkRequestStatus"
     ],
     ApprovalMode = HostedMcpServerToolApprovalMode.AlwaysRequire
 };
 
+Azure.Core.TokenCredential credential =
+    string.Equals(
+        Environment.GetEnvironmentVariable("AZURE_TOKEN_CREDENTIALS"),
+        nameof(AzureCliCredential),
+        StringComparison.OrdinalIgnoreCase)
+        ? new AzureCliCredential()
+        : new DefaultAzureCredential();
+
 AIAgent agent = new AIProjectClient(
         projectEndpoint,
-        new DefaultAzureCredential())
+        credential)
     .AsAIAgent(
         model: deploymentName,
         instructions: """
@@ -55,7 +73,7 @@ AIAgent agent = new AIProjectClient(
             """,
         name: "work-request-workshop-agent",
         description: "Workshop agent using work-request tools exposed through APIM and MCP",
-        tools: [mcpTool]);
+        tools: [readMcpTool, writeMcpTool]);
 
 var builder = AgentHost.CreateBuilder(args);
 builder.Services.AddFoundryResponses(agent);
