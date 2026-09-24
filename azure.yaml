@@ -43,9 +43,6 @@ services:
         cpu: "1.0"
         memory: 2.0Gi
 
-infra:
-  provider: microsoft.foundry
-
   petstore-workshop-agent:
     host: azure.ai.agent
     project: src/Workshop.Agent
@@ -75,3 +72,6 @@ infra:
       resources:
         cpu: "1.0"
         memory: 2.0Gi
+
+infra:
+  provider: microsoft.foundry

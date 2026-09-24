@@ -35,6 +35,8 @@ Foundry code-first agent   Copilot Studio agent
 - `docs/architecture.md`: Reference architecture and design notes.
 - `docs/prerequisites.md`: Environment and access checklist.
 - `docs/facilitator-guide.md`: Timing, checkpoints, and recovery paths.
+- `docs/azd-hosted-agent-deployment.md`: Advanced facilitator setup for
+  command-line hosted-agent deployment.
 - `docs/entra-delegated-oauth.md`: Optional delegated OAuth setup and MCP
   Inspector testing guidance.
 - `scripts/verify-prereqs.ps1`: Local prerequisite checks.
