@@ -354,12 +354,22 @@ The MCP client must discover the operations selected as tools.
      stream = $false
    } | ConvertTo-Json
 
-   Invoke-RestMethod `
+   $response = Invoke-RestMethod `
      -Method Post `
      -Uri "http://localhost:8088/responses" `
      -ContentType "application/json" `
      -Body $body
+
+   $response.output |
+     Where-Object type -eq "message" |
+     ForEach-Object { $_.content } |
+     Where-Object type -eq "output_text" |
+     Select-Object -ExpandProperty text
    ```
+
+   `Invoke-RestMethod` converts the JSON response into nested PowerShell
+   objects. The final pipeline extracts and prints the assistant's readable
+   text instead of displaying `content=System.Object[]`.
 
 If the response reports `ManagedIdentityCredential authentication failed` and
 references `169.254.169.254`, confirm the local `.env` contains
