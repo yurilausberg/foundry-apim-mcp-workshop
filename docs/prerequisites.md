@@ -42,7 +42,8 @@
 - Sufficient model quota in the deployment region. Foundry model quota is
   shared at the subscription and region level.
 - Foundry User on the project for development.
-- Foundry Project Manager if project connections must be created or changed.
+- Foundry Project Manager if participants will deploy a hosted agent version or
+  create or change project connections.
 - Permission to configure APIs, MCP servers, policies, and diagnostics in APIM.
 
 ## Optional access

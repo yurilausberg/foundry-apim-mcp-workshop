@@ -35,6 +35,9 @@
 
 - Do not spend more than 15 minutes debugging one participant environment.
 - Keep a prepared MCP endpoint available for the Foundry and Copilot Studio labs.
+- Pre-deploy one hosted-agent version for demonstration. Treat participant
+  deployment as optional when Foundry Project Manager access or build time is
+  limited.
 - Treat delegated OAuth as an extension after the anonymous endpoint works.
 - Use `mcp-governance.xml` for recovery. Use
   `mcp-governance-entra-delegated.xml` only for the optional authenticated path.

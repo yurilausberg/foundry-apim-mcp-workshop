@@ -45,7 +45,7 @@
   MCP servers, policies, and diagnostics.
 - Prepare a Microsoft Foundry project and grant participants the **Foundry
   User** role. Grant **Foundry Project Manager** only when participants must
-  create or modify project connections.
+  deploy a hosted agent version or create or modify project connections.
 - Deploy a base model such as `gpt-4.1` with approximately 250,000 TPM or more,
   and confirm sufficient subscription and regional quota for the expected
   concurrent group.
@@ -67,7 +67,7 @@
 |---|---|---:|---|
 | Lab 0 | Orientation, scenario, and sandbox confirmation | 60 minutes | Shared architecture, success criteria, and verified prerequisites |
 | Labs 1 and 2 | Import the API and expose it through APIM as MCP tools | 90 minutes | Tested REST API and working MCP endpoint |
-| Lab 3 | Build and run the Foundry agent | 75 minutes | Code-first agent using the MCP tools |
+| Lab 3 | Build and run the Foundry agent | 75 minutes | Code-first agent using the MCP tools, with optional hosted-version deployment |
 | Lab 4 | Add the Copilot Studio path | 30 minutes | Low-code agent using the same tools |
 | Lab 5 | Apply security, governance, and monitoring | 45 minutes | Governed sandbox design |
 | Lab 6 | Demonstrate the complete pattern and define next steps | 45 minutes | End-to-end validation and action plan |
@@ -381,6 +381,41 @@ it again.
 The agent should select `getAWorkRequest`, inspect the synthetic response, and
 return a grounded recommendation. Read operations run without an approval
 round-trip. Create and status-update operations still require approval.
+
+### Optional extension: save a hosted agent version
+
+The local `dotnet run` process is temporary and does not create an agent entry
+in the Foundry UI. Participants need the **Foundry Project Manager** role to
+deploy a hosted agent.
+
+The simplest workshop path uses the Foundry Toolkit extension:
+
+1. Stop the local agent.
+2. In Visual Studio Code, open the Command Palette.
+3. Run **Foundry Toolkit: Deploy Hosted Agent**.
+4. Select the workshop Foundry project.
+5. Choose **Code** as the deployment method.
+6. Confirm the `work-request-workshop-agent` name, .NET 10 runtime, model
+   deployment, and environment values.
+7. Select **Review + Deploy** and wait for the version to become active.
+8. Open the Foundry project, select **Agents**, then select
+   `work-request-workshop-agent` to view the saved version.
+
+The repository's `azure.yaml` already declares a Foundry hosted agent and uses
+code deployment, so Docker and Azure Container Registry are not required.
+Each later deployment with the same agent name creates another immutable
+version.
+
+The command-line equivalent is:
+
+```powershell
+azd deploy workshop-agent
+azd ai agent show workshop-agent --output json
+```
+
+The facilitator must bind the repository's active `azd` environment to the
+workshop Foundry project and set the model deployment and MCP server endpoint
+before participants use the command-line path.
 
 ## Lab 4: Add the Copilot Studio path
 
