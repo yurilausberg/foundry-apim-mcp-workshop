@@ -67,7 +67,7 @@
 |---|---|---:|---|
 | Lab 0 | Orientation, scenario, and sandbox confirmation | 60 minutes | Shared architecture, success criteria, and verified prerequisites |
 | Labs 1 and 2 | Import the API and expose it through APIM as MCP tools | 90 minutes | Tested REST API and working MCP endpoint |
-| Lab 3 | Build and run the Foundry agent | 75 minutes | Code-first agent using the MCP tools, with optional hosted-version deployment |
+| Lab 3 | Build and run the Foundry agent | 75 minutes | Code-first agent using MCP tools, an optional Petstore profile, and optional hosted deployment |
 | Lab 4 | Add the Copilot Studio path | 30 minutes | Low-code agent using the same tools |
 | Lab 5 | Apply security, governance, and monitoring | 45 minutes | Governed sandbox design |
 | Lab 6 | Demonstrate the complete pattern and define next steps | 45 minutes | End-to-end validation and action plan |
@@ -369,10 +369,10 @@ This is why the same compiled application can use either the work-request
 profile or the optional Petstore profile without a code change.
 
 Running `dotnet run` creates a temporary local agent host. It does not create a
-saved agent in the Foundry UI. The optional hosted-agent extension later in this
-lab packages the same source and creates an immutable Foundry agent version.
+saved agent in the Foundry UI. Lab 3C optionally packages the same source and
+creates an immutable Foundry agent version.
 
-### Configure and run the agent
+### Lab 3A: Configure and test the agent locally
 
 1. Copy the environment template:
 
@@ -478,7 +478,7 @@ The agent should select `getAWorkRequest`, inspect the synthetic response, and
 return a grounded recommendation. Read operations run without an approval
 round-trip. Create and status-update operations still require approval.
 
-### Optional extension: use the Petstore MCP server
+### Lab 3B: Switch to the Petstore MCP profile (optional)
 
 The agent code is configuration-driven and does not require a Petstore-specific
 code change.
@@ -507,7 +507,7 @@ auto-approved read-only tools and leaves the approval-required list empty.
 `PETSTORE_MCP_SERVER_ENDPOINT` supplies the same endpoint to the optional
 Petstore hosted-agent service.
 
-### Optional extension: deploy the agent to Foundry Agent Service
+### Lab 3C: Deploy the agent to Foundry Agent Service (optional)
 
 The local `dotnet run` process is temporary and does not create an agent entry
 in the Foundry UI. This extension performs a real deployment of the .NET
