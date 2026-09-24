@@ -415,6 +415,9 @@ code change.
 
 The Petstore template enables `findPetById` and `findsPetsByStatus` as
 auto-approved read-only tools and leaves the approval-required list empty.
+`MCP_SERVER_ENDPOINT` configures local execution.
+`PETSTORE_MCP_SERVER_ENDPOINT` supplies the same endpoint to the optional
+Petstore hosted-agent service.
 
 ### Optional extension: save a hosted agent version
 
@@ -435,21 +438,35 @@ The simplest workshop path uses the Foundry Toolkit extension:
 8. Open the Foundry project, select **Agents**, then select
    `work-request-workshop-agent` to view the saved version.
 
-The repository's `azure.yaml` already declares a Foundry hosted agent and uses
-code deployment, so Docker and Azure Container Registry are not required.
-Each later deployment with the same agent name creates another immutable
-version.
+The repository's `azure.yaml` declares separate work-request and Petstore
+hosted-agent services. Both use code deployment, so Docker and Azure Container
+Registry are not required. Each later deployment with the same agent name
+creates another immutable version.
 
-The command-line equivalent is:
+The command-line equivalent for the work-request profile is:
 
 ```powershell
-azd deploy workshop-agent
-azd ai agent show workshop-agent --output json
+azd deploy work-request-workshop-agent
+azd ai agent show work-request-workshop-agent --output json
 ```
 
 The facilitator must bind the repository's active `azd` environment to the
 workshop Foundry project and set the model deployment and MCP server endpoint
 before participants use the command-line path.
+
+To deploy the optional Petstore profile as a separate hosted agent:
+
+```powershell
+azd env set PETSTORE_MCP_SERVER_ENDPOINT `
+  "https://your-apim-instance.azure-api.net/petstore-anon/mcp"
+azd deploy petstore-workshop-agent
+azd ai agent show petstore-workshop-agent --output json
+```
+
+When using **Foundry Toolkit: Deploy Hosted Agent**, copy
+`.env.petstore.example` to `.env`, provide the real endpoint values, and deploy
+a new agent named `petstore-workshop-agent`. The review page should show .NET
+10, `dotnet Workshop.Agent.dll`, and 1 CPU / 2 GiB memory.
 
 ## Lab 4: Add the Copilot Studio path
 

@@ -8,13 +8,14 @@ requiredVersions:
 name: foundry-apim-mcp-workshop
 
 services:
-  workshop-agent:
+  work-request-workshop-agent:
     host: azure.ai.agent
     project: src/Workshop.Agent
     language: csharp
     codeConfiguration:
       runtime: dotnet_10
       entryPoint: Workshop.Agent.dll
+      dependencyResolution: remote_build
     kind: hosted
     name: work-request-workshop-agent
     displayName: Work Request Workshop Agent
@@ -30,6 +31,38 @@ services:
       MCP_APPROVAL_REQUIRED_TOOLS: createAWorkRequest,updateWorkRequestStatus
       AGENT_NAME: work-request-workshop-agent
       AGENT_DESCRIPTION: Workshop agent using work-request tools exposed through APIM and MCP
+    container:
+      resources:
+        cpu: "1.0"
+        memory: 2.0Gi
+
+  petstore-workshop-agent:
+    host: azure.ai.agent
+    project: src/Workshop.Agent
+    language: csharp
+    codeConfiguration:
+      runtime: dotnet_10
+      entryPoint: Workshop.Agent.dll
+      dependencyResolution: remote_build
+    kind: hosted
+    name: petstore-workshop-agent
+    displayName: Petstore Workshop Agent
+    description: A workshop agent using read-only Petstore tools through APIM-hosted MCP.
+    protocols:
+      - protocol: responses
+        version: 2.0.0
+    env:
+      AZURE_AI_MODEL_DEPLOYMENT_NAME: ${AZURE_AI_MODEL_DEPLOYMENT_NAME}
+      MCP_SERVER_ENDPOINT: ${PETSTORE_MCP_SERVER_ENDPOINT}
+      MCP_SERVER_NAME: petstore_tools
+      MCP_AUTO_APPROVED_TOOLS: findPetById,findsPetsByStatus
+      MCP_APPROVAL_REQUIRED_TOOLS: ""
+      AGENT_NAME: petstore-workshop-agent
+      AGENT_DESCRIPTION: Workshop agent using read-only Petstore tools exposed through APIM and MCP
+    container:
+      resources:
+        cpu: "1.0"
+        memory: 2.0Gi
 
 infra:
   provider: microsoft.foundry

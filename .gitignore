@@ -4,6 +4,7 @@ obj/
 appsettings.json
 .vscode/mcp.json
 src/Workshop.Agent/.checkpoints/
+.foundry/.deployment.json
 *.user
 *.suo
 *.nupkg

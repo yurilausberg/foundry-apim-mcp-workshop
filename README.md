@@ -61,6 +61,8 @@ Foundry code-first agent   Copilot Studio agent
 - Foundry project endpoint authentication through `DefaultAzureCredential`.
 - APIM Streamable HTTP MCP endpoint.
 - Environment-configured MCP tool allowlists and approval boundaries.
+- Separate hosted-agent profiles for the synthetic work-request and optional
+  read-only Petstore MCP servers.
 - Synthetic data and APIM mock policies for a safe sandbox.
 
 ## Source lineage
