@@ -4,14 +4,21 @@ requiredVersions:
   azd: ">=1.27.1"
   extensions:
     azure.ai.agents: ">=1.0.0-beta.9"
+    azure.ai.projects: ">=1.0.0-beta.4"
 
 name: foundry-apim-mcp-workshop
 
 services:
+  ai-project:
+    host: azure.ai.project
+    endpoint: ${AZURE_AI_PROJECT_ENDPOINT}
+
   work-request-workshop-agent:
     host: azure.ai.agent
     project: src/Workshop.Agent
     language: csharp
+    uses:
+      - ai-project
     codeConfiguration:
       runtime: dotnet_10
       entryPoint: Workshop.Agent.dll
@@ -36,10 +43,15 @@ services:
         cpu: "1.0"
         memory: 2.0Gi
 
+infra:
+  provider: microsoft.foundry
+
   petstore-workshop-agent:
     host: azure.ai.agent
     project: src/Workshop.Agent
     language: csharp
+    uses:
+      - ai-project
     codeConfiguration:
       runtime: dotnet_10
       entryPoint: Workshop.Agent.dll
@@ -63,6 +75,3 @@ services:
       resources:
         cpu: "1.0"
         memory: 2.0Gi
-
-infra:
-  provider: microsoft.foundry
