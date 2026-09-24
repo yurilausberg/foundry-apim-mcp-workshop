@@ -24,6 +24,9 @@ Foundry code-first agent   Copilot Studio agent
 ## Repository contents
 
 - `WORKSHOP.md`: Workshop preparation, schedule, and lab navigation.
+- [Workshop presentation](docs/foundry-apim-mcp-workshop.pptx): End-to-end
+  facilitator deck covering the workshop phases, architecture, labs, governance,
+  deployment, and production adaptation.
 - `docs/labs/`: Step-by-step instructions for Labs 0 through 6.
 - `openapi/work-request-api.yaml`: Synthetic API contract.
 - `policies/`: APIM policy examples for mock responses, anonymous governance,
