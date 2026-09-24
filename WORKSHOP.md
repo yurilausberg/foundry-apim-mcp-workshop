@@ -316,6 +316,64 @@ The MCP client must discover the operations selected as tools.
 
 ## Lab 3: Run the Foundry agent
 
+### What you are building
+
+In this lab, you run a .NET 10 hosted-agent application that connects a Foundry
+model to the MCP tools exposed through APIM in Lab 2. The application is an
+ASP.NET Core process that exposes a Responses protocol endpoint at
+`http://localhost:8088/responses`.
+
+The application does not host the language model and does not convert the REST
+API into MCP. Foundry provides the model, and APIM already provides the MCP
+server. The .NET application joins those components by:
+
+- Receiving a user request through the Responses endpoint.
+- Sending the conversation and agent instructions to the selected Foundry model.
+- Advertising only the MCP tools allowed by the active environment profile.
+- Applying different approval behavior to read and state-changing tools.
+- Returning the model's final, tool-grounded answer to the caller.
+
+The default profile uses the synthetic work-request tools:
+
+| Tool | Purpose | Approval |
+|---|---|---|
+| `getAWorkRequest` | Read a synthetic work request | Automatic |
+| `createAWorkRequest` | Create a synthetic work request | Required |
+| `updateWorkRequestStatus` | Change synthetic work-request status | Required |
+
+The approval boundary is configured in the agent, while APIM remains the
+gateway for tool exposure, policies, and observability. Production systems
+would also enforce authorization and business rules at the gateway and backend.
+
+### How the request flows
+
+```text
+PowerShell or Agent Inspector
+    -> local .NET Responses endpoint
+    -> Foundry model deployment
+    -> APIM-hosted MCP server
+    -> synthetic REST operation and mock response
+    -> Foundry model composes the final answer
+    -> caller receives the Responses result
+```
+
+For the sample prompt, the model determines that it needs work-request data,
+selects `getAWorkRequest`, calls it through the APIM MCP endpoint, and uses the
+returned synthetic record to produce its recommendation. The model should not
+invent the work-request details because the agent instructions require tool
+data when the answer depends on it.
+
+The source code is profile-driven. Environment variables select the MCP
+endpoint, allowed tools, approval boundaries, agent name, and description.
+This is why the same compiled application can use either the work-request
+profile or the optional Petstore profile without a code change.
+
+Running `dotnet run` creates a temporary local agent host. It does not create a
+saved agent in the Foundry UI. The optional hosted-agent extension later in this
+lab packages the same source and creates an immutable Foundry agent version.
+
+### Configure and run the agent
+
 1. Copy the environment template:
 
    ```powershell
