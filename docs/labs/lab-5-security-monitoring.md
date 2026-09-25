@@ -35,38 +35,43 @@ Start with the working sandbox. Add controls one at a time.
    a new GUID when the header is missing. The header is then forwarded to the
    downstream API and backend.
 
-In the Log Analytics workspace connected to Application Insights, replace the
-role-name placeholder and run this query to join MCP tool calls to the
-correlation trace written by the policy:
+Open **Logs** from the Application Insights resource, replace the role-name
+placeholder, and run this query to join MCP tool calls to the correlation trace
+written by the policy:
 
 ```kusto
 let CorrelationTraces =
-    AppTraces
-    | where TimeGenerated > ago(30m)
-    | extend CorrelationId = tostring(Properties["correlation-id"])
+    traces
+    | where timestamp > ago(30m)
+    | extend CorrelationId = tostring(customDimensions["correlation-id"])
     | where isnotempty(CorrelationId)
-    | project OperationId, CorrelationId;
-AppRequests
-| where TimeGenerated > ago(30m)
-| where AppRoleName == "<apim-service-name> <region>"
-| where tostring(Properties["api.type"]) startswith "mcp"
-| where tostring(Properties["gen_ai.operation.name"]) == "tools/call"
-| join kind=leftouter CorrelationTraces on OperationId
+    | project operation_Id, CorrelationId;
+requests
+| where timestamp > ago(30m)
+| where cloud_RoleName == "<apim-service-name> <region>"
+| where tostring(customDimensions["api.type"]) startswith "mcp"
+| where tostring(customDimensions["gen_ai.operation.name"]) == "tools/call"
+| join kind=leftouter CorrelationTraces on operation_Id
 | project
-    TimeGenerated,
-    Tool = tostring(Properties["gen_ai.tool.name"]),
+    timestamp,
+    Tool = tostring(customDimensions["gen_ai.tool.name"]),
     CorrelationId,
-    Success,
-    DurationMs,
-    OperationId
-| order by TimeGenerated desc
+    success,
+    duration,
+    operation_Id
+| order by timestamp desc
 ```
+
+When running the query directly from the Log Analytics workspace, use
+`AppTraces`, `AppRequests`, `TimeGenerated`, `Properties`, `AppRoleName`,
+`OperationId`, `Success`, and `DurationMs` instead of their Application
+Insights resource-view equivalents above.
 
 The `startswith "mcp"` filter accepts current APIM telemetry values such as
 `mcp-backend` as well as the `Mcp` value shown in some documentation.
 A populated `CorrelationId` confirms that the tool request and policy trace
-share an `OperationId`. A blank value means the tool request was captured but
-no matching correlation trace was found in the selected time window.
+share an operation ID. A blank value means the tool request was captured but no
+matching correlation trace was found in the selected time window.
 
 The workshop correlation begins at APIM unless the client or agent supplies the
 header. Full end-to-end tracing across the client and agent requires additional
