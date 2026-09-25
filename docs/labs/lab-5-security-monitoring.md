@@ -26,6 +26,19 @@ Start with the working sandbox. Add controls one at a time.
 8. Decide which tools need explicit approval before execution.
 9. Separate read operations from state-changing operations.
 
+## Production framing: Microsoft Agent 365
+
+This lab establishes runtime controls in Entra ID, APIM, the agent, and the
+monitoring stack. When it is enabled for the tenant, Microsoft Agent 365
+complements those controls as the enterprise governance plane for agent
+inventory, ownership, identity, lifecycle, security, and compliance.
+
+Published Foundry agents appear in the Agent 365 registry automatically.
+Activity ingestion and the broader security and compliance capabilities still
+require Agent 365 licensing and administrator enablement. Hosted-agent telemetry
+also requires the Agent 365 SDK and the required Microsoft Entra permissions.
+See [Microsoft Agent 365 integration with Foundry](https://learn.microsoft.com/azure/foundry/agents/concepts/agent-365-integration).
+
 ## Optional extension: delegated Entra OAuth
 
 Use this extension only after the anonymous MCP endpoint works.
