@@ -26,6 +26,20 @@ Start with the working sandbox. Add controls one at a time.
 8. Decide which tools need explicit approval before execution.
 9. Separate read operations from state-changing operations.
 
+## Verify correlation and diagnostics
+
+1. Invoke a read-only tool through the MCP server.
+2. In the APIM trace or connected monitoring destination, find the
+   `correlation-id` trace metadata written by the governance policy.
+3. Confirm that APIM preserves an incoming `x-correlation-id` header or creates
+   a new GUID when the header is missing. The header is then forwarded to the
+   downstream API and backend.
+
+The workshop correlation begins at APIM unless the client or agent supplies the
+header. Full end-to-end tracing across the client and agent requires additional
+instrumentation, typically using W3C trace context. The correlation ID is
+separate from the access token and its JWT claims.
+
 ## Production framing: Microsoft Agent 365
 
 This lab establishes runtime controls in Entra ID, APIM, the agent, and the
