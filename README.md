@@ -6,19 +6,12 @@ The lab uses a synthetic work-request API, Azure API Management, Model Context P
 
 ## What participants build
 
-```text
-Synthetic OpenAPI contract
-        |
-        v
-Azure API Management
-  - REST API import
-  - MCP server export
-  - policies and monitoring
-        |
-        +----------------------+
-        |                      |
-        v                      v
-Foundry code-first agent   Copilot Studio agent
+```mermaid
+flowchart LR
+    SPEC["Synthetic OpenAPI contract"] --> REST["APIM REST API"]
+    REST --> MCP["APIM MCP server<br/>Policies and monitoring"]
+    MCP --> FOUNDRY["Foundry code-first agent"]
+    MCP --> COPILOT["Copilot Studio agent<br/>Optional path"]
 ```
 
 ## Repository contents
