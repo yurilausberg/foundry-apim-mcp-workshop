@@ -8,11 +8,10 @@ The lab uses a synthetic work-request API, Azure API Management, Model Context P
 
 ```mermaid
 flowchart LR
-    WORK["Work-request OpenAPI"] --> WORKMCP["APIM: work-request MCP"]
-    PET["Petstore API<br/>Optional"] --> PETMCP["APIM: Petstore MCP"]
-    PETMCP --> PETAGENT["Foundry agent<br/>Petstore profile"]
-    WORKMCP --> WORKAGENT["Foundry agent<br/>Work-request profile"]
-    WORKMCP --> COPILOT["Copilot Studio<br/>Optional"]
+    WORK["Work-request OpenAPI"] --> APIM["Azure API Management<br/>REST APIs + MCP servers<br/>Policies + monitoring"]
+    PET["Petstore API<br/>Optional"] --> APIM
+    APIM --> COPILOT["Copilot Studio agent<br/>Optional"]
+    APIM --> FOUNDRY["Foundry agents<br/>Work-request + Petstore profiles"]
 ```
 
 ## Repository contents
