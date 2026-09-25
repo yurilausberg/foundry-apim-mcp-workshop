@@ -35,6 +35,39 @@ Start with the working sandbox. Add controls one at a time.
    a new GUID when the header is missing. The header is then forwarded to the
    downstream API and backend.
 
+In the Log Analytics workspace connected to Application Insights, replace the
+role-name placeholder and run this query to join MCP tool calls to the
+correlation trace written by the policy:
+
+```kusto
+let CorrelationTraces =
+    AppTraces
+    | where TimeGenerated > ago(30m)
+    | extend CorrelationId = tostring(Properties["correlation-id"])
+    | where isnotempty(CorrelationId)
+    | project OperationId, CorrelationId;
+AppRequests
+| where TimeGenerated > ago(30m)
+| where AppRoleName == "<apim-service-name> <region>"
+| where tostring(Properties["api.type"]) startswith "mcp"
+| where tostring(Properties["gen_ai.operation.name"]) == "tools/call"
+| join kind=leftouter CorrelationTraces on OperationId
+| project
+    TimeGenerated,
+    Tool = tostring(Properties["gen_ai.tool.name"]),
+    CorrelationId,
+    Success,
+    DurationMs,
+    OperationId
+| order by TimeGenerated desc
+```
+
+The `startswith "mcp"` filter accepts current APIM telemetry values such as
+`mcp-backend` as well as the `Mcp` value shown in some documentation.
+A populated `CorrelationId` confirms that the tool request and policy trace
+share an `OperationId`. A blank value means the tool request was captured but
+no matching correlation trace was found in the selected time window.
+
 The workshop correlation begins at APIM unless the client or agent supplies the
 header. Full end-to-end tracing across the client and agent requires additional
 instrumentation, typically using W3C trace context. The correlation ID is
