@@ -1,8 +1,11 @@
-# Foundry, APIM, and MCP Workshop
+# Build a Governed MCP Agent
 
-A public workshop scaffold for turning an existing REST API into governed tools for AI agents.
+A public, hands-on workshop that moves from REST APIs to APIM-hosted MCP tools,
+Microsoft Foundry agents, and production controls.
 
-The lab uses a synthetic work-request API, Azure API Management, Model Context Protocol, Microsoft Foundry, Microsoft Agent Framework, and an optional Copilot Studio path. It does not require organization data or access to organization systems.
+Participants build one governed tool layer for code-first Foundry agents and an
+optional Copilot Studio path using synthetic work-request data and the public
+Petstore API.
 
 ## What participants build
 
