@@ -16,15 +16,38 @@ Start with the working sandbox. Add controls one at a time.
 6. Note that `mcp-governance.xml` is the anonymous sandbox baseline. It adds
    correlation, rate limiting, and tracing, but it does not authenticate the
    caller.
-7. Review inbound access-control options:
 
-   - APIM subscription key for bounded workshop access and usage tracking.
-     A subscription key is not user authentication.
-   - Entra ID and OAuth for delegated user access.
-   - Managed identity for service-to-service access where supported.
+The baseline workshop stops here. The following sections frame additional
+production controls; they are not enabled by the baseline policy.
 
-8. Decide which tools need explicit approval before execution.
-9. Separate read operations from state-changing operations.
+## Review optional production access controls
+
+Choose an inbound access-control approach based on the client and operating
+model:
+
+- APIM subscription key for bounded workshop access and usage tracking. A
+  subscription key is not user authentication.
+- Entra ID and OAuth for delegated user access. The optional
+  `mcp-governance-entra-delegated.xml` policy and
+  [delegated OAuth guide](../entra-delegated-oauth.md) provide this extension.
+- Managed identity for service-to-service access where the MCP client and
+  hosting model support it.
+
+These options require additional configuration and are not active in the
+anonymous workshop baseline.
+
+## Review agent tool-approval policy
+
+Tool approvals are an agent configuration concern, not an APIM policy. Review
+`MCP_AUTO_APPROVED_TOOLS` and `MCP_APPROVAL_REQUIRED_TOOLS` in the selected
+agent profile:
+
+- Keep read operations automatic where the risk is acceptable.
+- Require approval for create, update, delete, or other material actions.
+
+APIM continues to enforce gateway controls such as authentication, rate limits,
+tracing, and backend access. The agent provides the user-facing approval
+boundary before it invokes an approval-required MCP tool.
 
 ## Verify correlation and diagnostics
 
