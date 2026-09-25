@@ -72,6 +72,45 @@ header. Full end-to-end tracing across the client and agent requires additional
 instrumentation, typically using W3C trace context. The correlation ID is
 separate from the access token and its JWT claims.
 
+## Monitor Foundry agent activity
+
+The APIM telemetry above describes activity at the MCP boundary. The
+Application Insights resource connected to the Foundry project can separately
+capture agent operations such as `invoke_agent`, `chat`, and `execute_tool`.
+Open **Logs** from that Application Insights resource and run this query to
+summarize model calls and token usage by agent:
+
+```kusto
+dependencies
+| where timestamp > ago(7d)
+| where cloud_RoleName == "responsesapi" and type == "AI"
+| extend
+    operation = tostring(customDimensions["gen_ai.operation.name"]),
+    agent = tostring(customDimensions["gen_ai.agent.name"]),
+    model = tostring(customDimensions["gen_ai.response.model"]),
+    inputTokens = tolong(customDimensions["gen_ai.usage.input_tokens"]),
+    outputTokens = tolong(customDimensions["gen_ai.usage.output_tokens"]),
+    cacheReadTokens =
+        tolong(customDimensions["gen_ai.usage.cache_read.input_tokens"]),
+    reasoningTokens =
+        tolong(customDimensions["gen_ai.usage.reasoning.output_tokens"])
+| where operation == "chat" and isnotnull(inputTokens)
+| summarize
+    calls = count(),
+    inputTokens = sum(inputTokens),
+    outputTokens = sum(outputTokens),
+    cacheReadTokens = sum(cacheReadTokens),
+    reasoningTokens = sum(reasoningTokens)
+    by agent, model
+| order by inputTokens desc
+```
+
+The role and dependency-type filters select the canonical AI span. Without
+them, the same model call can appear at multiple instrumentation layers and
+token totals can be counted more than once. When querying the linked Log
+Analytics workspace directly, use `AppDependencies`, `TimeGenerated`,
+`AppRoleName`, `DependencyType`, and `Properties`.
+
 ## Production framing: Microsoft Agent 365
 
 This lab establishes runtime controls in Entra ID, APIM, the agent, and the
