@@ -61,9 +61,8 @@ Foundry code-first agent   Copilot Studio agent
 
 - .NET 10.
 - Microsoft Agent Framework hosted-agent pattern.
-- Foundry project endpoint authentication through `DefaultAzureCredential` in
-  hosted environments, with `AzureCliCredential` selected for local
-  development through `AZURE_TOKEN_CREDENTIALS`.
+- Azure authentication with `AzureCliCredential` locally or
+  `DefaultAzureCredential` when hosted.
 - APIM Streamable HTTP MCP endpoint.
 - Environment-configured MCP tool allowlists and approval boundaries.
 - Separate hosted-agent profiles for the synthetic work-request and optional
