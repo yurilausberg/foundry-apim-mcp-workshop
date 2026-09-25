@@ -44,7 +44,16 @@
 - Foundry User on the project for development.
 - Foundry Project Manager if participants will deploy a hosted agent version or
   create or change project connections.
+- A workspace-based Application Insights resource connected to the Foundry
+  project for the Lab 5 agent-activity and token-usage queries.
+- An APIM logger and diagnostic configuration that sends gateway telemetry to
+  Application Insights or Log Analytics.
+- Read access to the connected Application Insights resource and **Log
+  Analytics Reader** on its linked workspace.
 - Permission to configure APIs, MCP servers, policies, and diagnostics in APIM.
+
+The monitoring resources are workshop observability dependencies. The agent and
+MCP endpoint can run without them, but the hands-on Lab 5 KQL exercises cannot.
 
 ## Optional access
 
@@ -60,6 +69,8 @@
 | Foundry project endpoint | `https://<account>.services.ai.azure.com/api/projects/<project>` |
 | Model deployment name | `gpt-4.1` |
 | APIM MCP endpoint | `https://<apim-name>.azure-api.net/work-request-tools/mcp` |
+| Foundry Application Insights resource | `appi-<environment>` |
+| Linked Log Analytics workspace | `logs-<environment>` |
 
 ## Sandbox rules
 

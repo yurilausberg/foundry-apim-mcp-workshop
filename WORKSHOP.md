@@ -50,6 +50,11 @@ has its own instructions and links to the previous and next lab.
 - Prepare a Microsoft Foundry project and grant participants the **Foundry
   User** role. Grant **Foundry Project Manager** only when participants must
   deploy a hosted agent version or create or modify project connections.
+- Connect the Foundry project to a workspace-based Application Insights
+  resource. Grant participants read access to the component and **Log Analytics
+  Reader** on its linked workspace so they can run the Lab 5 agent queries.
+- Configure an APIM logger and diagnostics destination in Application Insights
+  or Log Analytics for the Lab 5 gateway and MCP correlation queries.
 - Deploy a compatible model, such as `gpt-4.1` where available, and size its
   tokens-per-minute allocation for the expected participant count and prompt
   volume.

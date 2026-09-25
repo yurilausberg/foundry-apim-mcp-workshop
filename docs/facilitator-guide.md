@@ -7,7 +7,12 @@
 3. Test tool discovery from Visual Studio Code.
 4. Build the .NET project.
 5. Run the agent and validate the three workshop prompts.
-6. Prepare screenshots for each checkpoint in case portal access is slow.
+6. Connect the Foundry project to workspace-based Application Insights and
+   validate that a prepared agent request produces agent and token telemetry.
+7. Configure APIM diagnostics and validate that a prepared MCP tool call
+   produces request and correlation telemetry.
+8. Confirm participants can query both monitoring destinations.
+9. Prepare screenshots for each checkpoint in case portal access is slow.
    Crop or redact account names, user identities, tenant and subscription IDs,
    resource IDs, tokens, and private endpoints.
 

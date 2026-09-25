@@ -11,7 +11,15 @@
 3. Confirm the model deployment has enough tokens-per-minute capacity for the
    expected group size and prompt volume. Verify that the subscription has
    sufficient quota for that model in the deployment region.
-4. Confirm Azure CLI authentication:
+4. Confirm the Foundry project is connected to a workspace-based Application
+   Insights resource.
+5. Confirm APIM diagnostics send gateway telemetry to Application Insights or
+   Log Analytics.
+6. Confirm the participant can open **Logs** for the Foundry Application
+   Insights resource and query its linked Log Analytics workspace. The
+   facilitator can use prepared smoke traffic if participant traffic does not
+   exist yet.
+7. Confirm Azure CLI authentication:
 
    ```powershell
    az account show --query state --output tsv
@@ -21,8 +29,8 @@
    Do not paste account, tenant, or subscription details into shared logs or
    screenshots.
 
-5. Confirm the participant has the Foundry User role on the project.
-6. Confirm the lab will use synthetic data only.
+8. Confirm the participant has the Foundry User role on the project.
+9. Confirm the lab will use synthetic data only.
 
 ---
 
