@@ -35,20 +35,19 @@ Start with the working sandbox. Add controls one at a time.
    a new GUID when the header is missing. The header is then forwarded to the
    downstream API and backend.
 
-Open **Logs** from the Application Insights resource, replace the role-name
-placeholder, and run this query to join MCP tool calls to the correlation trace
-written by the policy:
+Open **Logs** from the Application Insights resource and run this query to join
+MCP tool calls to the correlation trace written by the policy:
 
 ```kusto
 let CorrelationTraces =
     traces
-    | where timestamp > ago(30m)
+    | where timestamp > ago(2h)
     | extend CorrelationId = tostring(customDimensions["correlation-id"])
     | where isnotempty(CorrelationId)
     | project operation_Id, CorrelationId;
 requests
-| where timestamp > ago(30m)
-| where cloud_RoleName == "<apim-service-name> <region>"
+| where timestamp > ago(2h)
+| where url contains "/mcp"
 | where tostring(customDimensions["api.type"]) startswith "mcp"
 | where tostring(customDimensions["gen_ai.operation.name"]) == "tools/call"
 | join kind=leftouter CorrelationTraces on operation_Id
