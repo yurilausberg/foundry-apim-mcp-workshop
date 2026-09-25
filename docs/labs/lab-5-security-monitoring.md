@@ -62,6 +62,11 @@ Use this extension only after the anonymous MCP endpoint works.
 
 6. Reconnect, list the tools, and invoke a read-only tool.
 
+The manual test and client-managed MCP OAuth both send the same delegated access
+token as a bearer token. The manual path acquires the token elsewhere and adds
+the header directly. A client-managed flow discovers the authorization server,
+runs Authorization Code with PKCE, and manages the token lifecycle.
+
 Authorization Code with PKCE is the recommended flow for an interactive public
 client. Do not use a client secret for this client. APIM token validation does
 not by itself enable automatic OAuth sign-in in MCP Inspector. Automatic

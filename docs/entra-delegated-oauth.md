@@ -20,6 +20,12 @@ The optional policy validates:
 The policy only validates tokens. It does not perform user sign-in, issue
 tokens, or publish the OAuth discovery metadata used by MCP clients.
 
+A bearer token and OAuth are not separate authentication modes. OAuth is the
+flow that obtains the access token. Bearer describes how the client presents
+that token to the MCP resource. The manual workshop test and client-managed MCP
+OAuth both send the same `Authorization` header, and APIM validates the same
+issuer, audience, client, and delegated-scope claims.
+
 ## App registration outline
 
 Use two app registrations:
@@ -66,7 +72,7 @@ need a client secret.
 Do not combine the baseline and Entra policy files. The Entra policy already
 contains the same correlation, rate limiting, and tracing controls.
 
-## Test with MCP Inspector
+## Test with a manually supplied token
 
 For a one-time workshop test, generating a delegated token through the APIM
 developer portal is acceptable.
@@ -90,13 +96,14 @@ developer portal is acceptable.
 Access tokens expire. Do not save a token in this repository, a shared workshop
 file, screenshots, or shell history.
 
-## Better options for repeated or production use
+## Move to client-managed OAuth for repeated or production use
 
 For repeated facilitator testing, use an MSAL-based public client that performs
 interactive Authorization Code with PKCE and caches tokens for the signed-in
-user. This removes the dependency on the developer portal, but MCP Inspector
-still needs the resulting bearer token unless the MCP server publishes OAuth
-discovery metadata that Inspector can use.
+user. The resulting access token is still presented to APIM as a bearer token.
+This removes the dependency on the developer portal, but MCP Inspector still
+needs manual token injection unless the MCP server publishes OAuth discovery
+metadata that Inspector can use.
 
 For a client-native sign-in experience, add:
 
