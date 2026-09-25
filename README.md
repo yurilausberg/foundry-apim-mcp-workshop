@@ -56,11 +56,6 @@ Foundry code-first agent   Copilot Studio agent
    ```
 
 3. Follow [WORKSHOP.md](WORKSHOP.md).
-4. Build the agent starter:
-
-   ```powershell
-   dotnet build .\src\Workshop.Agent\Workshop.Agent.csproj
-   ```
 
 ## Current implementation choices
 
