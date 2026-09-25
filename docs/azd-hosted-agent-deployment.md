@@ -20,13 +20,14 @@ azd auth login
 azd auth login --check-status
 ```
 
-Confirm that Azure CLI is using the intended subscription:
+Confirm that Azure CLI is signed in:
 
 ```powershell
-az account show `
-  --query "{subscription:name, subscriptionId:id, tenantId:tenantId}" `
-  --output table
+az account show --query state --output tsv
 ```
+
+Do not paste account, tenant, subscription, resource, or user identifiers into
+issues, screenshots, or shared transcripts.
 
 ## 2. Create or select the azd environment
 
@@ -135,10 +136,12 @@ That warning does not prevent a named work-request deployment.
 ## 5. Bind and verify the project
 
 ```powershell
-azd env get-values
 azd ai project show --output json
 azd provision --preview --no-prompt
 ```
+
+The project output can contain environment identifiers. Review it locally and
+do not copy it into shared logs.
 
 The preview should report:
 
@@ -167,6 +170,10 @@ Optionally package one service before the workshop:
 ```powershell
 azd package work-request-workshop-agent --no-prompt
 ```
+
+The project-level `.agentignore` keeps local `.env` files, build output, generated
+checkpoints, symbols, and IDE state out of the deployment package. Review this
+file before adding other local-only files under `src/Workshop.Agent`.
 
 ## 6. Deploy one named service
 
@@ -209,7 +216,7 @@ azd ai agent invoke petstore-workshop-agent `
 
 | Error | Resolution |
 |---|---|
-| `AZURE_SUBSCRIPTION_ID is required` | Set it from `az account show --query id --output tsv`. |
+| `AZURE_SUBSCRIPTION_ID is required` | Set it from the subscription segment of the Foundry project ARM resource ID. |
 | `Microsoft Foundry project ID is required` | Set the full project ARM resource ID as `AZURE_AI_PROJECT_ID`. The endpoint URL is not the project ID. |
 | `AZURE_LOCATION is not set` | Query the project resource location and save it as `AZURE_LOCATION`. Code deployment must use the Foundry project region. |
 | `missing_project_endpoint` | Set `AZURE_AI_PROJECT_ENDPOINT`, then run `azd provision --no-prompt`. |

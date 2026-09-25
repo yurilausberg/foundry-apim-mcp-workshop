@@ -2,12 +2,12 @@
   "servers": {
     "work-request-workshop": {
       "type": "http",
-      "url": "https://your-apim-instance.azure-api.net/work-requests-mcp/mcp"
+      "url": "https://example.invalid/work-request-tools/mcp"
     }
     // Optional Petstore path:
     // ,"petstore-anon": {
     //   "type": "http",
-    //   "url": "https://your-apim-instance.azure-api.net/petstore-anon/mcp"
+    //   "url": "https://example.invalid/petstore-anon/mcp"
     // }
   }
 }

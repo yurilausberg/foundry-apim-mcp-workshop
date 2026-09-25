@@ -35,6 +35,8 @@ Foundry code-first agent   Copilot Studio agent
 - `src/Workshop.Agent/.env.example`: Work-request MCP agent configuration.
 - `src/Workshop.Agent/.env.petstore.example`: Optional read-only Petstore MCP
   agent configuration.
+- `src/Workshop.Agent/.agentignore`: Deployment-package exclusions for local
+  credentials, build output, and generated state.
 - `docs/architecture.md`: Reference architecture and design notes.
 - `docs/prerequisites.md`: Environment and access checklist.
 - `docs/facilitator-guide.md`: Timing, checkpoints, and recovery paths.
@@ -70,10 +72,6 @@ Foundry code-first agent   Copilot Studio agent
 - Separate hosted-agent profiles for the synthetic work-request and optional
   read-only Petstore MCP servers.
 - Synthetic data and APIM mock policies for a safe sandbox.
-
-## Source lineage
-
-This workshop refreshes the earlier `agent-framework-mcp-demo` pattern. The classic persistent-agent code has been replaced with the current Foundry project endpoint and Agent Framework hosting model.
 
 ## References
 

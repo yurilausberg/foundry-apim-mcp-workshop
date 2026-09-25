@@ -37,7 +37,7 @@ paths:
                 missingInformation:
                   - Statement of work
                   - Cost center
-                updatedAt: "2026-09-23T16:00:00Z"
+                updatedAt: "2026-01-15T16:00:00Z"
         "404":
           description: Work request not found
   /:
@@ -53,7 +53,7 @@ paths:
               $ref: "#/components/schemas/CreateWorkRequest"
             example:
               title: Facility inspection services
-              requester: Operations Team
+              requester: Demo Operations Team
               amount: 25000
               currency: USD
               description: Inspect the primary facility and document findings.
@@ -67,12 +67,12 @@ paths:
               example:
                 id: WR-1002
                 title: Synthetic workshop request
-                requester: Workshop Participant
+                requester: Demo Requester
                 status: Draft
                 amount: 25000
                 currency: USD
                 missingInformation: []
-                updatedAt: "2026-09-29T20:00:00Z"
+                updatedAt: "2026-01-15T17:00:00Z"
   /{requestId}/status:
     patch:
       operationId: updateWorkRequestStatus
@@ -111,7 +111,7 @@ paths:
                 amount: 25000
                 currency: USD
                 missingInformation: []
-                updatedAt: "2026-09-29T20:15:00Z"
+                updatedAt: "2026-01-15T17:15:00Z"
 components:
   schemas:
     WorkRequest:
@@ -159,7 +159,7 @@ components:
         updatedAt:
           type: string
           format: date-time
-          example: 2026-09-23T16:00:00Z
+          example: 2026-01-15T16:00:00Z
     CreateWorkRequest:
       type: object
       required:

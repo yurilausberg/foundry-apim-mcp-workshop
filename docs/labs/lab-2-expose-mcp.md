@@ -108,8 +108,7 @@ The MCP client must discover the operations selected as tools.
 - If MCP Inspector connects to the same URL but VS Code still shows
   **Starting**, do not recreate the APIM MCP server. Treat the problem as a
   VS Code client-state issue and use Inspector as the lab validation fallback.
-  This behavior is tracked in
-  [microsoft/vscode#336805](https://github.com/microsoft/vscode/issues/336805).
+  Client behavior can vary by Visual Studio Code and Copilot extension version.
 - To inspect a connection failure, run **MCP: List Servers**, select
   `work-request-workshop`, and choose **Show Output**.
 - A `401` normally means the client did not send the required header or token.

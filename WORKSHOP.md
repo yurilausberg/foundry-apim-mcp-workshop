@@ -43,17 +43,20 @@ has its own instructions and links to the previous and next lab.
 
 ### Shared Azure sandbox
 
-- Prepare an APIM instance on a v2 SKU that supports MCP, such as Basic v2,
-  Standard v2, or Premium v2. Grant participants permission to configure APIs,
-  MCP servers, policies, and diagnostics.
+- Prepare an APIM instance in a tier that supports MCP servers. Supported
+  classic tiers include Developer, Basic, Standard, and Premium. Supported v2
+  tiers include Basic v2, Standard v2, and Premium v2. Grant participants
+  permission to configure APIs, MCP servers, policies, and diagnostics.
 - Prepare a Microsoft Foundry project and grant participants the **Foundry
   User** role. Grant **Foundry Project Manager** only when participants must
   deploy a hosted agent version or create or modify project connections.
-- Deploy a base model such as `gpt-4.1` with approximately 250,000 TPM or more,
-  and confirm sufficient subscription and regional quota for the expected
-  concurrent group.
-- Share the tenant, subscription, Foundry project endpoint, model deployment
-  name, APIM service name, and resource group before the workshop.
+- Deploy a compatible model, such as `gpt-4.1` where available, and size its
+  tokens-per-minute allocation for the expected participant count and prompt
+  volume.
+- Distribute the tenant, subscription, Foundry project endpoint, model
+  deployment name, APIM service name, and resource group through an approved
+  private channel. Do not place real environment values in this repository,
+  slides, screenshots, or shared transcripts.
 - Use an isolated sandbox with synthetic data. Do not connect participant
   exercises to production systems or confidential data.
 
@@ -96,4 +99,4 @@ Capture:
 - Required user and workload identities.
 - Approval boundaries for state-changing actions.
 - Logging, retention, and support requirements.
-- Pilot success criteria and named owners.
+- Pilot success criteria and accountable owner roles.

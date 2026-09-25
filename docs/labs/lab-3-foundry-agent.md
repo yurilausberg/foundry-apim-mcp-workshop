@@ -232,7 +232,7 @@ Client
 This workshop uses **Code** with **Remote** package mode. Foundry Toolkit
 packages the source as a ZIP, uploads it, restores the dependencies declared in
 the `.csproj`, and prepares the managed runtime image. Participants do not need
-a Dockerfile, local Docker installation, or customer-managed Azure Container
+a Dockerfile, local Docker installation, or participant-managed Azure Container
 Registry for this path.
 
 The Toolkit also supports **Container** deployment for applications that need a

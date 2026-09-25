@@ -8,6 +8,8 @@
 4. Build the .NET project.
 5. Run the agent and validate the three workshop prompts.
 6. Prepare screenshots for each checkpoint in case portal access is slow.
+   Crop or redact account names, user identities, tenant and subscription IDs,
+   resource IDs, tokens, and private endpoints.
 
 ## Teaching pattern
 

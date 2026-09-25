@@ -11,7 +11,7 @@ function Test-Command {
         throw "Required command '$Name' was not found."
     }
 
-    Write-Host "[OK] $Name -> $($command.Source)"
+    Write-Host "[OK] $Name is available"
 }
 
 Test-Command dotnet
@@ -41,8 +41,7 @@ if (-not $account) {
     throw "Azure CLI is not signed in. Run 'az login'."
 }
 
-Write-Host "[OK] Azure subscription: $($account.name)"
-Write-Host "[OK] Azure tenant: $($account.tenantId)"
+Write-Host "[OK] Azure CLI is signed in"
 
 az account get-access-token `
     --resource https://ai.azure.com `

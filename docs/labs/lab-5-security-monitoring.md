@@ -16,9 +16,10 @@ Start with the working sandbox. Add controls one at a time.
 6. Note that `mcp-governance.xml` is the anonymous sandbox baseline. It adds
    correlation, rate limiting, and tracing, but it does not authenticate the
    caller.
-7. Review inbound authentication options:
+7. Review inbound access-control options:
 
-   - APIM subscription key for a bounded workshop.
+   - APIM subscription key for bounded workshop access and usage tracking.
+     A subscription key is not user authentication.
    - Entra ID and OAuth for delegated user access.
    - Managed identity for service-to-service access where supported.
 
@@ -43,7 +44,7 @@ Use this extension only after the anonymous MCP endpoint works.
 5. In MCP Inspector, add this custom HTTP header:
 
    ```text
-   Authorization: ******
+   Authorization: Bearer <access-token>
    ```
 
 6. Reconnect, list the tools, and invoke a read-only tool.

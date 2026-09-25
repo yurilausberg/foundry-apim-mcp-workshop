@@ -1,0 +1,10 @@
+.env
+.env.*
+!.env.example
+!.env.petstore.example
+.checkpoints/
+bin/
+obj/
+*.user
+*.suo
+*.pdb

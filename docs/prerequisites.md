@@ -34,11 +34,11 @@
 
 ## Azure access
 
-- An API Management instance on a v2 SKU that supports MCP: Basic v2,
-  Standard v2, or Premium v2.
+- An API Management instance in a tier that supports MCP servers: Developer,
+  Basic, Standard, Premium, Basic v2, Standard v2, or Premium v2.
 - A Microsoft Foundry resource and project.
-- A base model deployment, such as `gpt-4.1`, with approximately 250,000
-  tokens per minute (TPM) or more allocated for concurrent workshop use.
+- A compatible model deployment, such as `gpt-4.1` where available, with
+  tokens-per-minute capacity sized for the expected concurrent workshop use.
 - Sufficient model quota in the deployment region. Foundry model quota is
   shared at the subscription and region level.
 - Foundry User on the project for development.
@@ -57,9 +57,9 @@
 
 | Value | Example |
 |---|---|
-| Foundry project endpoint | `https://resource.services.ai.azure.com/api/projects/project-name` |
+| Foundry project endpoint | `https://<account>.services.ai.azure.com/api/projects/<project>` |
 | Model deployment name | `gpt-4.1` |
-| APIM MCP endpoint | `https://instance.azure-api.net/work-requests-mcp/mcp` |
+| APIM MCP endpoint | `https://<apim-name>.azure-api.net/work-request-tools/mcp` |
 
 ## Sandbox rules
 
@@ -67,4 +67,6 @@
 - Do not use customer credentials.
 - Do not connect to production systems.
 - Do not include secrets in `.env`, `mcp.json`, screenshots, or commits.
+- Do not paste tenant IDs, subscription IDs, resource IDs, account names, or
+  user identifiers into issues, screenshots, or shared transcripts.
 - Treat write operations as approval-required unless the facilitator explicitly enables them.
