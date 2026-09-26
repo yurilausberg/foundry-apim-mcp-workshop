@@ -4,8 +4,11 @@
 block-beta
     columns 5
     space Agent365["Microsoft Agent 365<br/>Governance plane"]:2 space:2
+    space:5
     space:2 APIM["APIM Control Plane<br/>Policies and controls"]:2 space
+    space:5
     Participant["Participant<br/>Prompt or client"] Agent["Agent Harness<br/>Foundry or Copilot Studio"] MCP["MCP Server<br/>Tool discovery and execution"] Contract["REST contract<br/>OpenAPI operations"] Backend["Backend<br/>Mock response or Petstore"]
+    space:5
     space Insights["Application Insights<br/>Agent and APIM telemetry"]:3 space
 
     Participant --> Agent
