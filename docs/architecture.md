@@ -1,57 +1,80 @@
 # Reference Architecture
 
 ```mermaid
-flowchart LR
-    User[Workshop participant] --> Agent[Foundry or Copilot Studio agent]
+flowchart TB
+    Agent365["Microsoft Agent 365<br/>Governance plane"]
+    APIM["APIM Control Plane<br/>Policies and controls"]
 
-    subgraph APIM["Azure API Management"]
-        WorkMCP["Work-request MCP server"]
-        WorkPolicy["Authentication, rate limits,<br/>trace, and logging policies"]
-        WorkAPI["Synthetic work-request REST API"]
-        WorkMock["APIM mock responses"]
+    subgraph Runtime["Runtime path"]
+        direction LR
+        Participant["Participant<br/>Prompt or client"]
+        Agent["Agent Harness<br/>Foundry or Copilot Studio"]
+        MCP["MCP Server<br/>Tool discovery and execution"]
+        Contract["REST contract<br/>OpenAPI operations"]
+        Backend["Backend<br/>Mock response or Petstore"]
 
-        PetMCP["Optional Petstore MCP server"]
-        PetPolicy["Authentication, rate limits,<br/>trace, and logging policies"]
-        PetAPI["Petstore REST API proxy"]
+        Participant --> Agent --> MCP --> Contract --> Backend
     end
 
-    Agent -->|Default profile<br/>Streamable HTTP MCP| WorkMCP
-    WorkMCP --> WorkPolicy
-    WorkPolicy --> WorkAPI
-    WorkAPI --> WorkMock
+    Insights["Application Insights<br/>Agent and APIM telemetry"]
 
-    Agent -.->|Optional read-only profile<br/>Streamable HTTP MCP| PetMCP
-    PetMCP --> PetPolicy
-    PetPolicy --> PetAPI
-    PetAPI --> Petstore["Public Swagger Petstore API<br/>Third-party test service"]
+    Agent365 -. governance .-> Agent
+    Agent365 -. governance .-> APIM
+    APIM -->|MCP policies| MCP
+    APIM -->|API policies| Contract
 
-    WorkMCP --> Monitor[Azure Monitor and Application Insights]
-    PetMCP --> Monitor
+    Agent -. telemetry .-> Insights
+    MCP -. telemetry .-> Insights
+    Contract -. telemetry .-> Insights
+
+    classDef governance fill:#ffffff,stroke:#7655b5,stroke-width:2px,color:#172b4d;
+    classDef control fill:#ffffff,stroke:#008c95,stroke-width:2px,color:#172b4d;
+    classDef runtime fill:#ffffff,stroke:#4c8bf5,stroke-width:2px,color:#172b4d;
+    classDef observe fill:#ffffff,stroke:#d7e0e8,stroke-width:2px,color:#172b4d;
+    class Agent365 governance;
+    class APIM control;
+    class Participant,Agent,MCP,Contract,Backend runtime;
+    class Insights observe;
 ```
+
+The governance and observability layers intentionally overlap the runtime path:
+
+- **Microsoft Agent 365** spans the Agent Harness and MCP Server. It provides
+  enterprise inventory, identity, ownership, lifecycle, security, and
+  compliance governance. It also governs the APIM control plane. Agent 365 is
+  part of the production architecture and is not required to complete the labs.
+- **APIM Control Plane** spans the MCP Server and REST contract. It applies
+  authentication, rate limits, correlation, tracing, logging, and request
+  controls without becoming an extra step in the runtime sequence.
+- **Application Insights** spans the Agent Harness, MCP Server, and REST
+  contract. The Agent Harness and APIM boundary emit correlated telemetry into
+  one observability layer. The MCP Server and REST contract arrows represent
+  gateway observations at those boundaries.
 
 ## Workshop profiles
 
 | Profile | APIM path | Backend | Tool behavior |
 |---|---|---|---|
-| Work request | Managed REST API exposed as the work-request MCP server | Static OpenAPI examples returned by APIM `mock-response` | Read tool is automatic; create and update tools require approval |
-| Petstore (optional) | Separate managed REST API exposed as the Petstore MCP server | Public Swagger Petstore service | Read-only tools are automatic |
+| Work request | Managed REST contract exposed through the MCP Server | Static OpenAPI examples returned by APIM `mock-response` | Read tool is automatic; create and update tools require Agent Harness approval |
+| Petstore (optional) | Separate managed REST contract exposed through the MCP Server | Public Swagger Petstore service | Read-only tools are automatic |
 
-Both profiles use the same .NET agent application. Environment variables select
-the APIM MCP endpoint, tool allowlist, approval boundary, agent name, and
-description. The agent connects to one profile at a time during local testing.
-The hosted deployment manifest can deploy separate work-request and Petstore
-agents from the shared source.
+Both profiles use the same .NET Agent Harness implementation. Environment
+variables select the APIM MCP endpoint, tool allowlist, approval boundary, agent
+name, and description. The agent connects to one profile at a time during local
+testing. The hosted deployment manifest can deploy separate work-request and
+Petstore agents from the shared source.
 
 ## Responsibilities
 
 | Layer | Responsibility |
 |---|---|
-| Agent | Intent interpretation, tool selection, response composition, and approval experience |
-| MCP | Standard tool discovery and invocation protocol |
-| APIM | Central gateway, tool exposure, authentication, policy enforcement, monitoring, and scale |
-| REST API | Business operation contract, request validation, and backend routing or mock behavior |
+| Microsoft Agent 365 | Enterprise agent inventory, identity, ownership, lifecycle, security, and compliance governance |
+| Agent Harness | Intent interpretation, tool selection, response composition, and approval experience |
+| MCP Server | Standard tool discovery and invocation protocol |
+| APIM Control Plane | Central gateway configuration, tool exposure, authentication, rate limits, policy enforcement, correlation, tracing, logging, and scale |
+| REST contract | OpenAPI operation contract, request validation, and backend routing or mock behavior |
 | Identity | User or workload authentication and authorization |
-| Monitoring | Request correlation, latency, failures, usage, and audit evidence |
+| Application Insights | Correlated agent and APIM telemetry for latency, failures, usage, and audit evidence |
 
 ## Production adaptation
 
