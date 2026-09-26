@@ -1,40 +1,35 @@
 # Reference Architecture
 
 ```mermaid
-flowchart TB
-    Agent365["Microsoft Agent 365<br/>Governance plane"]
-    APIM["APIM Control Plane<br/>Policies and controls"]
+block-beta
+    columns 5
+    space Agent365["Microsoft Agent 365<br/>Governance plane"]:2 space:2
+    space:2 APIM["APIM Control Plane<br/>Policies and controls"]:2 space
+    Participant["Participant<br/>Prompt or client"] Agent["Agent Harness<br/>Foundry or Copilot Studio"] MCP["MCP Server<br/>Tool discovery and execution"] Contract["REST contract<br/>OpenAPI operations"] Backend["Backend<br/>Mock response or Petstore"]
+    space Insights["Application Insights<br/>Agent and APIM telemetry"]:3 space
 
-    subgraph Runtime["Runtime path"]
-        direction LR
-        Participant["Participant<br/>Prompt or client"]
-        Agent["Agent Harness<br/>Foundry or Copilot Studio"]
-        MCP["MCP Server<br/>Tool discovery and execution"]
-        Contract["REST contract<br/>OpenAPI operations"]
-        Backend["Backend<br/>Mock response or Petstore"]
+    Participant --> Agent
+    Agent --> MCP
+    MCP --> Contract
+    Contract --> Backend
 
-        Participant --> Agent --> MCP --> Contract --> Backend
-    end
+    Agent365 -.-> Agent
+    Agent365 -.-> APIM
+    APIM --> MCP
+    APIM --> Contract
 
-    Insights["Application Insights<br/>Agent and APIM telemetry"]
+    Agent -.-> Insights
+    MCP -.-> Insights
+    Contract -.-> Insights
 
-    Agent365 -. governance .-> Agent
-    Agent365 -. governance .-> APIM
-    APIM -->|MCP policies| MCP
-    APIM -->|API policies| Contract
-
-    Agent -. telemetry .-> Insights
-    MCP -. telemetry .-> Insights
-    Contract -. telemetry .-> Insights
-
-    classDef governance fill:#ffffff,stroke:#7655b5,stroke-width:2px,color:#172b4d;
-    classDef control fill:#ffffff,stroke:#008c95,stroke-width:2px,color:#172b4d;
-    classDef runtime fill:#ffffff,stroke:#4c8bf5,stroke-width:2px,color:#172b4d;
-    classDef observe fill:#ffffff,stroke:#d7e0e8,stroke-width:2px,color:#172b4d;
-    class Agent365 governance;
-    class APIM control;
-    class Participant,Agent,MCP,Contract,Backend runtime;
-    class Insights observe;
+    classDef governance fill:#ffffff,stroke:#7655b5,stroke-width:2px,color:#172b4d
+    classDef control fill:#ffffff,stroke:#008c95,stroke-width:2px,color:#172b4d
+    classDef runtime fill:#ffffff,stroke:#4c8bf5,stroke-width:2px,color:#172b4d
+    classDef observe fill:#ffffff,stroke:#d7e0e8,stroke-width:2px,color:#172b4d
+    class Agent365 governance
+    class APIM control
+    class Participant,Agent,MCP,Contract,Backend runtime
+    class Insights observe
 ```
 
 The governance and observability layers intentionally overlap the runtime path:
