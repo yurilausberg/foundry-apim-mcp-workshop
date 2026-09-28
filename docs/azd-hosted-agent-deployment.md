@@ -126,7 +126,7 @@ For the optional Petstore agent:
 
 ```powershell
 azd env set PETSTORE_MCP_SERVER_ENDPOINT `
-  "https://<apim-name>.azure-api.net/petstore-anon/mcp"
+  "https://<apim-name>.azure-api.net/petstore-tools/mcp"
 ```
 
 The full `azd ai agent doctor` check validates both services. It reports a

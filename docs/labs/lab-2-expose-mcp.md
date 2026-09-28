@@ -10,9 +10,16 @@
 4. Choose the API imported in [Lab 1](lab-1-import-api.md).
 5. Select the operations to expose as tools. For the static work-request path,
    select all three operations. For Petstore, start with read-only operations.
-6. Enter a **Display name**, such as `Work Request Tools`.
-7. Confirm the required **Name** field contains a URL-safe value, such as
-   `work-request-tools`.
+6. Enter a **Display name**:
+
+   - For the static work-request path, use `Work Request Tools`.
+   - For the optional Petstore path, use `Petstore Read-Only Tools`.
+
+7. Confirm the required **Name** field contains the corresponding URL-safe
+   value:
+
+   - For the static work-request path, use `work-request-tools`.
+   - For the optional Petstore path, use `petstore-tools`.
 8. Create the MCP server.
 9. In the **MCP Servers** list, find the new server. In the **Server URL**
    column, select the **Copy to clipboard** icon.
@@ -77,12 +84,13 @@ The MCP client must discover the operations selected as tools.
    Get work request WR-1001 and summarize its current status.
    ```
 
-11. For the optional Petstore path, uncomment the `petstore-anon` entry in
+11. For the optional Petstore path, uncomment the `petstore-workshop` entry in
     `.vscode/mcp.json`, replace its placeholder URL with the copied Petstore MCP
     server URL, and save the file.
 12. Select **Configure Tools** again, search for `petstore`, find
-    `petstore-anon`, and select **Refresh Tools**.
-13. Expand `petstore-anon` and select the checkbox for both read-only tools:
+    `petstore-workshop`, and select **Refresh Tools**.
+13. Expand `petstore-workshop` and select the checkbox for both read-only
+    tools:
 
     - `findPetById`: Returns a single pet by its numeric ID.
     - `findsPetsByStatus`: Finds pets by status. Provide multiple status values

@@ -5,9 +5,9 @@
       "url": "https://example.invalid/work-request-tools/mcp"
     }
     // Optional Petstore path:
-    // ,"petstore-anon": {
+    // ,"petstore-workshop": {
     //   "type": "http",
-    //   "url": "https://example.invalid/petstore-anon/mcp"
+    //   "url": "https://example.invalid/petstore-tools/mcp"
     // }
   }
 }
